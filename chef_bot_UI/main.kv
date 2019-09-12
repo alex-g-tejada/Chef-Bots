@@ -1,0 +1,111 @@
+#:kivy 1.10.1
+
+#chef-bot-black = hex(2F3638)
+
+<MenuButton@Button>:
+    markup: True
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1, 0, 1, 1)
+    border_radius: [18]
+    size: (180,70)
+    size_hint: (None, None)
+    border_radius: [18]
+    
+    on_press: app.Pressbtn(self)
+    color: rgba(app.chef_bot_black)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_primary)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+<MenuPopup>:
+    id: popup_topping
+    canvas:
+        Color:
+            rgb: rgba('FDFFFC')
+        Rectangle:
+            pos: self.pos 
+            size: (400, 300)
+    Label:
+        id: Confirm
+        text: 'Welcome'
+        size_hint: 0.6, 0.2
+        pos: (self.pos)
+        #pos_hint: {"x": 0.2, "Top": 1}
+    Button:
+        text: 'You passed'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'Top': 1}
+        on_press: app.ConfirmSel(self)
+
+<MainWindow>:
+    cols: 1
+    rows: 3
+    BoxLayout:
+        cols: 1
+        size_hint: 1, .10
+        pos_hint: {'x': 1, 'top': 1}
+        canvas:
+            Color:
+                rgb: rgba(app.chef_bot_black )
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: 'Chef Bots'
+            color: rgba('FDFFFC')
+            pos_hint_x: 0.1
+            size: (100,100)
+            bold: True
+        Label:
+            text: ''
+            color: rgba('FDFFFC')
+            pos_hint_x: 0.1
+            size: (100,100)
+            bold: True
+
+    GridLayout:
+        cols: 3
+        padding: 100
+        spacing: 30
+        pos_hint: {'x': 0.5, 'y': 0.5}
+        canvas:
+            Color:
+                rgb: rgba('FDFFFC')
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        MenuButton:
+            id: T
+            text: 'Tomatos'
+        MenuButton:
+            id: L
+            text: 'Lettuce'
+        MenuButton:
+            id: On
+            text: 'Onions'
+        MenuButton:
+            id: C
+            text: 'Cheese'
+        MenuButton:
+            id: P
+            text: 'Pickles'
+    
+    GridLayout:
+        cols: 1
+        size_hint_y: .05
+        canvas:
+            Color:
+                rgb: rgba(app.chef_bot_black)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            text: ''
+            color: rgba('FDFFFC')
+            pos_hint_x: .15
+            bold: True
