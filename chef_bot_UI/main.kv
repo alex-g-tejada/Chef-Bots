@@ -91,7 +91,7 @@
                 size: self.size
         MenuButton:
             id: T
-            text: 'Tomatos'
+            text: 'Tomatoes'
         MenuButton:
             id: L
             text: 'Lettuce'
@@ -107,7 +107,7 @@
     
     GridLayout:
         cols: 1
-        size_hint_y: .05
+        size_hint_y: .1
         canvas:
             Color:
                 rgb: rgba(app.chef_bot_black)
@@ -117,5 +117,10 @@
         Label:
             text: ''
             color: rgba('FDFFFC')
-            pos_hint_x: .15
+            pos_hint_x: 0.15
+            bold: True
+        Label:
+            text: ''
+            color: rgba('FDFFFC')
+            pos_hint_x: 0.4
             bold: True
