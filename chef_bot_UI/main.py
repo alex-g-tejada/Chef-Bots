@@ -14,6 +14,10 @@ from kivy.uix.widget import Widget
 from kivy.uix.actionbar import ActionBar, ActionButton
 # In Use
 from kivy.uix.popup import Popup
+# State Machine
+import sys
+sys.path.append('../chef_bot_RCS/')
+from cobot_state import CobotControl
 
 # Chef Bot Ingredient menu
 __author__ = 'Alex Tejada'
@@ -29,30 +33,6 @@ class MenuPopup(FloatLayout):
 
 class MainApp(App):
 
-    def build(self):
-        return MainWindow()
-    
-    def Pressbtn(self, instance):
-        request = instance.text
-        print('[INFO   ] [Cobot App   ] Requesting ',request)
-        show = MenuPopup()
-        popupWindow = Popup(title="Requested " + request + '?', content=show , size_hint=(None, None), size=(400,400))
-        popupWindow.open()
-    
-    def ConfirmSel(self, instance):
-        print('[INFO   ] [Cobot App   ] Requested ' + request + 'confirmed. ')
-        popupWindow.dismiss()
-
-        
-    def DeclineSel(self, instance):
-        print('[INFO   ] [Cobot App   ] Requested ' + request + 'cancelled. ')
-        popupWindow.dismiss()
-
-
-        # send request to Armando's part
-        # get a reponse from the model 
-        # send to Heidi's part 
-
     # Main Menu Color Decorators
     chef_bot_black = '2F3638'
     chef_bot_light = 'FEFFFE'
@@ -62,10 +42,41 @@ class MainApp(App):
     chef_bot_tertiary = 'F7F3E3'
 
     # Declarations
-    request = ''
-    popupWindow = object()
+    cobotController = CobotControl()
+    RC = 'Request Confirmed'
+    
+
+    def MainApp (self):
+        self.request = 'empty'
+        self.popupWindow = object()
+
+    def build(self):
+        return MainWindow()
+    
+    def Pressbtn(self, instance):
+        self.request = instance.text
+        print('[INFO   ] [Cobot App   ] Requesting ', self.request)
+        show = MenuPopup()
+        self.popupWindow = Popup(title="Requested " + self.request + '?', title_align='center', 
+                content=show, size_hint=(None, None), size=(400,400))
+        self.popupWindow.open()
+    
+    def ConfirmSel(self, instance):
+        print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
+        self.popupWindow.dismiss()
+        self.cobotController.on_event(self.RC)
+
+        
+    def DeclineSel(self, instance):
+        print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Cancelled. ')
+        self.popupWindow.dismiss()
+
+        # send request to Armando's part
+        # get a reponse from the model 
+        # send to Heidi's part 
 
 # End of app delcaration
 
 if __name__ == "__main__":
-    MainApp().run() 
+    app = MainApp()
+    app.run() 

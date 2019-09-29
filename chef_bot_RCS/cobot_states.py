@@ -9,11 +9,11 @@ The Defualt State:
 """
 class ReceiveState(State):
     def on_event(self, event):
-        if event == 'Complete':
-            return GatherImageState()
+        if event == 'Request Confirmed':
+            return DetectionState()
         return self
 
-class GatherImageState(State):
+class DetectionState(State):
     def on_event(self, event):
         if event == 'Ready':
             return ResponseState()
@@ -26,12 +26,12 @@ class ResponseState(State):
         if event == 'Not Found':
             return CancelOrderState()
         elif event == 'Found':
-            return ToppingPointState()
+            return PinPointState()
         elif event == 'Error':
             return CancelOrderState()
         return self
 
-class ToppingPointState(State):
+class PinPointState(State):
     def on_event(self, event):
         if event == 'Done':
             return ReceiveState()

@@ -24,23 +24,33 @@
 
 <MenuPopup>:
     id: popup_topping
-    canvas:
-        Color:
-            rgb: rgba('FDFFFC')
-        Rectangle:
-            pos: self.pos 
-            size: (400, 300)
-    Label:
-        id: Confirm
-        text: 'Welcome'
-        size_hint: 0.6, 0.2
-        pos: (self.pos)
+    separator_color: rgba(app.chef_bot_secondary)
+    title_color: rgba(app.chef_bot_black)
+    
+    #canvas:
+    #    Color:
+    #        rgb: rgba('FDFFFC')
+    #    Rectangle:
+    #        pos: self.pos 
+    #        size: (370, 300)
+    
+    #Label:
+    #    id: Confirm
+    #    text: 'Do you want to select'
+    #    size_hint: 0.6, 0.2
+    #    pos_hint: {'x': 0.2, 'top':1}
         #pos_hint: {"x": 0.2, "Top": 1}
     Button:
-        text: 'You passed'
+        text: 'Yes'
         size_hint: 0.6, 0.2
-        pos_hint: {'x': 0.2, 'Top': 1}
+        pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.ConfirmSel(self)
+
+    Button:
+        text: 'No'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.4}
+        on_press: app.DeclineSel(self)
 
 <MainWindow>:
     cols: 1
