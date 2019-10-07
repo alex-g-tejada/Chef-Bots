@@ -1,7 +1,7 @@
 # Main Kivy application class
 from kivy.app import App
-# User Interface Components
 import kivy
+# User Interface Components
 from kivy.base import runTouchApp
 from kivy.lang import Builder
 from kivy.base import runTouchApp
@@ -12,16 +12,21 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.pagelayout import PageLayout
 from kivy.uix.widget import Widget 
 from kivy.uix.actionbar import ActionBar, ActionButton
-# In Use
 from kivy.uix.popup import Popup
-# State Machine
+
+# State Machine for the Cobot
 import sys
 sys.path.append('../chef_bot_RCS/')
 from cobot_state import CobotControl
 
-# Chef Bot Ingredient menu
+# Adjust Window Size for the PI
+from kivy.core.window import Window
+Window.size = (800, 500)
+
+# Text Updater
+from kivy.properties import StringProperty
+
 __author__ = 'Alex Tejada'
-#
 
 kivyFile = 'main.kv'
 
@@ -43,6 +48,7 @@ class MainApp(App):
 
     # Declarations
     cobotController = CobotControl()
+    Status = StringProperty(str(cobotController.state))
     RC = 'Request Confirmed'
     
 
@@ -58,18 +64,21 @@ class MainApp(App):
         print('[INFO   ] [Cobot App   ] Requesting ', self.request)
         show = MenuPopup()
         self.popupWindow = Popup(title="Requested " + self.request + '?', title_align='center', 
-                content=show, size_hint=(None, None), size=(400,400))
+                content=show, size_hint=(None, None), size=(400,250))
         self.popupWindow.open()
     
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.RC)
+        self.Status = str(self.cobotController.state)
 
-        
     def DeclineSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Cancelled. ')
         self.popupWindow.dismiss()
+
+    def AppExit(self, isinstance):
+        pass
 
         # send request to Armando's part
         # get a reponse from the model 

@@ -1,7 +1,5 @@
 #:kivy 1.10.1
 
-#chef-bot-black = hex(2F3638)
-
 <MenuButton@Button>:
     markup: True
     background_color: (0,0,0,0)
@@ -11,7 +9,6 @@
     size: (180,70)
     size_hint: (None, None)
     border_radius: [18]
-    
     on_press: app.Pressbtn(self)
     color: rgba(app.chef_bot_black)
     canvas.before:
@@ -22,24 +19,31 @@
             pos: self.pos
             radius: self.border_radius
 
+
+<HeaderButton@Button>:
+    markup: True
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1, 0, 1, 1)
+    border_radius: [18]
+    size: (80,30)
+    size_hint: (None, None)
+    border_radius: [18]
+    color: rgba(app.chef_bot_secondary)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_secondary)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+
 <MenuPopup>:
     id: popup_topping
     separator_color: rgba(app.chef_bot_secondary)
     title_color: rgba(app.chef_bot_black)
     
-    #canvas:
-    #    Color:
-    #        rgb: rgba('FDFFFC')
-    #    Rectangle:
-    #        pos: self.pos 
-    #        size: (370, 300)
-    
-    #Label:
-    #    id: Confirm
-    #    text: 'Do you want to select'
-    #    size_hint: 0.6, 0.2
-    #    pos_hint: {'x': 0.2, 'top':1}
-        #pos_hint: {"x": 0.2, "Top": 1}
     Button:
         text: 'Yes'
         size_hint: 0.6, 0.2
@@ -55,13 +59,13 @@
 <MainWindow>:
     cols: 1
     rows: 3
-    BoxLayout:
-        cols: 1
-        size_hint: 1, .10
+    GridLayout:
+        cols: 2
+        size_hint: 1, 0.13
         pos_hint: {'x': 1, 'top': 1}
         canvas:
             Color:
-                rgb: rgba(app.chef_bot_black )
+                rgb: rgba(app.chef_bot_black)
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -69,14 +73,18 @@
             text: 'Chef Bots'
             color: rgba('FDFFFC')
             pos_hint_x: 0.1
-            size: (100,100)
             bold: True
-        Label:
-            text: ''
-            color: rgba('FDFFFC')
-            pos_hint_x: 0.1
-            size: (100,100)
-            bold: True
+        GridLayout:
+            rows: 1
+            spacing: 10, 10
+            padding: 10, 10
+            size_hint: 0.18, 1
+            HeaderButton:
+                text: 'Exit'
+                color: rgba('FDFFFC')
+                bold: True
+                on_press: app.get_running_app().stop()
+        
 
     GridLayout:
         cols: 3
@@ -106,8 +114,8 @@
             text: 'Pickles'
     
     GridLayout:
-        cols: 1
-        size_hint_y: .1
+        rows: 1
+        size_hint_y: 0.12
         canvas:
             Color:
                 rgb: rgba(app.chef_bot_black)
@@ -115,7 +123,7 @@
                 pos: self.pos
                 size: self.size
         Label:
-            text: ''
+            text: app.Status
             color: rgba('FDFFFC')
             pos_hint_x: 0.15
             bold: True
