@@ -1,4 +1,3 @@
-# cobot_states.py
 from state import State
 
 
@@ -15,7 +14,7 @@ class ReceiveState(State):
 
 class DetectionState(State):
     def on_event(self, event):
-        if event == 'Ready':
+        if event == 'Setup Complete':
             return ResponseState()
         elif event == 'Error':
             return CancelOrderState()
@@ -33,7 +32,7 @@ class ResponseState(State):
 
 class PinPointState(State):
     def on_event(self, event):
-        if event == 'Done':
+        if event == 'Point Complete':
             return ReceiveState()
         elif event == 'Error':
             return CancelOrderState()
@@ -41,7 +40,7 @@ class PinPointState(State):
 
 class CancelOrderState(State):
     def on_event(self, event):
-        if event == 'Finished':
+        if event == 'Request Completed':
             # Reset topping to default
             self.orderTopping = 'None'
             return ReceiveState

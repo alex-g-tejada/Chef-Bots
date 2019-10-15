@@ -13,6 +13,7 @@ from kivy.uix.pagelayout import PageLayout
 from kivy.uix.widget import Widget 
 from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import ScreenManager, Screen
 
 # State Machine for the Cobot
 import sys
@@ -28,11 +29,39 @@ from kivy.properties import StringProperty
 
 __author__ = 'Alex Tejada'
 
-kivyFile = 'main.kv'
 
+
+"""
+Main Window panel that will hold the main page of the application
+"""
 class MainWindow(GridLayout):
     pass
 
+
+"""
+Landing page for the application that will greet the user 
+"""
+class MainScreen(Screen):
+    pass
+
+
+"""
+One topping selection page 
+"""
+class OneSelectScreen(Screen):
+    pass
+
+
+"""
+
+"""
+class MultSelectScreen(Screen):
+    pass
+
+
+"""
+Popup Window for user confirmation of a topping
+"""
 class MenuPopup(FloatLayout):
     pass
 
@@ -46,18 +75,30 @@ class MainApp(App):
     chef_bot_secondary = 'DAE8D3'
     chef_bot_tertiary = 'F7F3E3'
 
-    # Declarations
+    # Cobot State controller 
     cobotController = CobotControl()
+    # String holding the state of the controller
     Status = StringProperty(str(cobotController.state))
+    # State Keys
     RC = 'Request Confirmed'
-    
+    SC = 'Setup Complete'
+    ER = 'Error'
+    NF = 'Not Found'
+    FR = 'Found Request'
+    PC = 'Point Complete'
+    FC = 'Request Completed'
+
+    # Screen Manager 
+    screenmanager = ScreenManager()
 
     def MainApp (self):
         self.request = 'empty'
         self.popupWindow = object()
 
     def build(self):
-        return MainWindow()
+        self.screenmanager.add_widget(OneSelectScreen(name="screen_one"))
+        self.screenmanager.add_widget(MultSelectScreen(name="screen_two"))
+        return self.screenmanager
     
     def Pressbtn(self, instance):
         self.request = instance.text
