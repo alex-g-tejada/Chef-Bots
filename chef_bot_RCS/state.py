@@ -13,7 +13,7 @@ class State(object):
     given to the overall state.
     """
     def __init__ (self):
-        print('Processing the current state: ', str(self))
+        print('[INFO   ] [Cobot RCS   ] Current State:  ', str(self))
     
     """
     Provides the current state name that will notify the user the phase 

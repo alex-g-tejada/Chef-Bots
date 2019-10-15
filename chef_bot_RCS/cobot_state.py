@@ -17,7 +17,8 @@ class CobotControl(object):
     
     """
     The control will pass the event to change the state if the proper
-    event has occurred with the cooresponding state
+    event has occurred with the cooresponding state. Event will be the 
+    state keys: string text from the main program.
     """
     def on_event(self, event):
         self.state = self.state.on_event(event)
