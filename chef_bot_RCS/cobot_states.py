@@ -2,7 +2,8 @@ from state import State
 
 
 """
-The Defualt State:
+The Defualt State: ReceoveState
+
 
 
 """
@@ -12,7 +13,13 @@ class ReceiveState(State):
             return DetectionState()
         return self
 
+
 class DetectionState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("code start up!!")
+
+    
     def on_event(self, event):
         if event == 'Setup Complete':
             return ResponseState()
@@ -21,6 +28,12 @@ class DetectionState(State):
         return self
 
 class ResponseState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("code start up!!")
+        # AI Code Here #
+
+
     def on_event(self, event):
         if event == 'Not Found':
             return CancelOrderState()
@@ -31,6 +44,11 @@ class ResponseState(State):
         return self
 
 class PinPointState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("code start up!!")
+        # Arm Code Here #
+    
     def on_event(self, event):
         if event == 'Point Complete':
             return ReceiveState()
@@ -38,7 +56,12 @@ class PinPointState(State):
             return CancelOrderState()
         return self
 
+
 class CancelOrderState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("code start up!!")
+
     def on_event(self, event):
         if event == 'Request Completed':
             # Reset topping to default
