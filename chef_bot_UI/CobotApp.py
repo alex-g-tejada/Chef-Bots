@@ -32,16 +32,8 @@ from kivy.properties import StringProperty
 __author__ = 'Alex Tejada'
 
 
-
 """
-Landing page for the application that will greet the user 
-"""
-class MainScreen(Screen):
-    pass
-
-
-"""
-One topping selection page 
+Screen to display individual set of ingredients
 """
 class OneSelectScreen(Screen):
     def __init__(self, *args, **kwargs):
@@ -49,14 +41,15 @@ class OneSelectScreen(Screen):
 
 
 """
-
+Screen to allow the user to individually select the ingrients
+the cobot should find
 """
 class MultSelectScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
 """
-
+Landing page for the application that will greet the user 
 """
 class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
@@ -125,7 +118,7 @@ class MainApp(App):
     def build(self):
         self.title = 'Chef Bots'
         self.__init__()
-        return self.screenmanager
+        return runTouchApp(self.screenmanager)
     
     def toppinglist_toString(self):
         s = str(self.toppingList) 
