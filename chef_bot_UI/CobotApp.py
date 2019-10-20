@@ -14,8 +14,6 @@ from kivy.uix.widget import Widget
 from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
-
-# Kivy Fonts
 from kivy.core.text import LabelBase
 
 # State Machine for the Cobot
@@ -25,6 +23,7 @@ from cobot_state import CobotControl
 
 # Adjust Window Size for the PI
 from kivy.core.window import Window
+from kivy.config import Config
 Window.size = (800, 500)
 
 # Text Updater
@@ -197,6 +196,9 @@ class MainApp(App):
 
 # End of app delcaration
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
+    Config.set('graphics', 'fullscrenn','auto')
+    Config.set('graphics','window_state','maximized')
+    Config.write()
     app = MainApp()
     app.run() 
