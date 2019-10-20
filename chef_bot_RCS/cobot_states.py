@@ -17,7 +17,7 @@ class ReceiveState(State):
 class DetectionState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("code start up!!")
+        #print("code start up!!")
 
     
     def on_event(self, event):

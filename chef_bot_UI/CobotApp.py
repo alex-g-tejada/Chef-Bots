@@ -15,6 +15,9 @@ from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 
+# Kivy Fonts
+from kivy.core.text import LabelBase
+
 # State Machine for the Cobot
 import sys
 sys.path.append('../chef_bot_RCS/')
@@ -32,13 +35,6 @@ __author__ = 'Alex Tejada'
 
 
 """
-Main Window panel that will hold the main page of the application
-"""
-class MainWindow(GridLayout):
-    pass
-
-
-"""
 Landing page for the application that will greet the user 
 """
 class MainScreen(Screen):
@@ -49,20 +45,32 @@ class MainScreen(Screen):
 One topping selection page 
 """
 class OneSelectScreen(Screen):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 """
 
 """
 class MultSelectScreen(Screen):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+"""
+
+"""
+class GreeterScreen(Screen):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
 
 """
 Popup Window for user confirmation of a topping
 """
 class MenuPopup(FloatLayout):
+    pass
+
+class MenuPopup_Mult(FloatLayout):
     pass
 
 class MainApp(App):
@@ -88,18 +96,45 @@ class MainApp(App):
     PC = 'Point Complete'
     FC = 'Request Completed'
 
+    # Burger Ingredients
+    tomatoes = 'Tomatoes'
+    lettuce = 'Lettuce'
+    pickles = 'Pickles'
+    cheese = 'Cheese'
+    onions = 'Onions'
+
+    # List of Ingredients selected
+    toppingList = []
+
+    request = 'empty'
+
+
     # Screen Manager 
-    screenmanager = ScreenManager()
+    #screenmanager = ScreenManager()
 
     def MainApp (self):
-        self.request = 'empty'
         self.popupWindow = object()
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.screenmanager = ScreenManager()
+        self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
+        self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
+        self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
+        
+
     def build(self):
-        self.screenmanager.add_widget(OneSelectScreen(name="screen_one"))
-        self.screenmanager.add_widget(MultSelectScreen(name="screen_two"))
+        self.title = 'Chef Bots'
+        self.__init__()
         return self.screenmanager
     
+    def toppinglist_toString(self):
+        s = str(self.toppingList) 
+        s = s.replace("'","")
+        s = s.replace("[","")
+        s = s.replace("]","")
+        return s
+
     def Pressbtn(self, instance):
         self.request = instance.text
         print('[INFO   ] [Cobot App   ] Requesting ', self.request)
@@ -108,6 +143,37 @@ class MainApp(App):
                 content=show, size_hint=(None, None), size=(400,250))
         self.popupWindow.open()
     
+    def itemSelect(self, text, state):
+        is_box_on = state
+        print('[INFO   ] [Cobot App   ] Checkbox State: ', is_box_on)
+        
+        if is_box_on == 'down':
+            item = text
+            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', text)
+            self.toppingList.append(item)
+            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
+        elif is_box_on == 'normal':
+            item = text
+            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', text)
+            self.toppingList.remove(item)
+            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
+        
+    def Submitbtn(self, instance):
+        if len(self.toppingList) > 0:
+            print('[INFO   ] [Cobot App   ] Requesting ', self.toppingList)
+            requesting = self.toppinglist_toString()
+            show = MenuPopup_Mult()
+            self.popupWindow = Popup(title="Requesting: " + requesting + '?', title_align='center', 
+                    content=show, size_hint=(None, None), size=(400,250))
+            self.popupWindow.open()
+            
+
+    def ConfirmMultSel(self, instance):
+        print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Confirmed. ')
+        self.popupWindow.dismiss()
+        self.cobotController.on_event(self.RC)
+        self.Status = str(self.cobotController.state)
+
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
         self.popupWindow.dismiss()
@@ -116,6 +182,10 @@ class MainApp(App):
 
     def DeclineSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Cancelled. ')
+        self.popupWindow.dismiss()
+
+    def DeclineSel_Mult(self, instance):
+        print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Cancelled. ')
         self.popupWindow.dismiss()
 
     def AppExit(self, isinstance):
