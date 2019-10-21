@@ -5,6 +5,10 @@ from kivy.uix.button import Button
 from random import random
 
 
+from kivy.core.window import Window
+from kivy.config import Config
+Window.size = (800, 500)
+
 class MyPrintWidget(Widget):
     def on_touch_down(self, touch):
         print (touch)
@@ -41,4 +45,7 @@ class MyPrintApp(App):
         return p
     
 if __name__ == "__main__":
+    Config.set('graphics', 'fullscrenn','auto')
+    Config.set('graphics','window_state','maximized')
+    Config.write()
     MyPrintApp().run()
