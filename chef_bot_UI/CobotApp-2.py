@@ -56,6 +56,17 @@ class GreeterScreen(Screen):
         super().__init__(*args, **kwargs)
 
 
+class TestS(BoxLayout):
+    def __init__(self, *args, **kwargs):
+        super(TestS, self).__init__(*args, **kwargs)
+        self.orientation="horizontal"
+
+
+class TestScreen(Screen):
+    def __init__(self, *args, **kwargs):
+        super(TestScreen, self).__init__(*args, **kwargs)
+        self.count_box = 1
+        self.add_widget(TestS())
  
 
 """
@@ -112,10 +123,10 @@ class MainApp(App):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.screenmanager = ScreenManager()
-        #self.screenmanager.add_widget(TestScreen(name="test"))
-        self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
-        self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
-        self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
+        self.screenmanager.add_widget(TestScreen(name="test"))
+        #self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
+        #self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
+        #self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
         
 
     def build(self):
