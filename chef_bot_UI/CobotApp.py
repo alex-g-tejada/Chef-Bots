@@ -55,6 +55,11 @@ class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+class TestScreen(Screen):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.add_widget(Button(text='hey'))
+
 
 """
 Popup Window for user confirmation of a topping
@@ -110,9 +115,10 @@ class MainApp(App):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.screenmanager = ScreenManager()
-        self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
-        self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
-        self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
+        self.screenmanager.add_widget(TestScreen(name="test"))
+        #self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
+        #self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
+        #self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
         
 
     def build(self):
