@@ -250,7 +250,59 @@
                 on_press: app.get_running_app().stop()
             
         FooterBar:
+<TestScreen@Screen>:
+    GridLayout:
+        cols: 1
+        rows: 4
+        NavBar:
+            Label:
+                text: 'Chef Bots'
+                font_name: 'fonts/Roboto-Regular.ttf'
+                color: rgba('FDFFFC')
+                pos_hint_x: 0.1
+                bold: True
 
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 0.2
+            canvas:
+                Color:
+                    rgb: rgba('FDFFFC')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size  
+            MenuLabel:
+                text: "Welcome! Click an option to start"
+                size_hint_y: 0.1
+                pos_hint_y: 0
+                #color: 0,0,0,1
+
+        GreeterPanel:
+            MenuButton2:
+                id: T
+                text: 'Individual Items'
+                on_press: 
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_two"
+            MenuButton2:
+                id: L
+                text: 'Mult Selections'
+                #font_name: 'resources/Robot-Regular.ttf'
+                on_press: 
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_three"
+            MenuButton2:
+                id: L
+                text: 'Exit'
+                on_press: 
+                    root.manager.transition.direction = "left"
+                    root.manager.transition.duration = 1
+                    root.manager.current = "screen_three"
+                on_press: app.get_running_app().stop()
+            
+        FooterBar:
 
 # Screen 2 
 <OneSelectScreen>:

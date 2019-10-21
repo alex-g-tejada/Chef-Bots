@@ -58,7 +58,7 @@ class GreeterScreen(Screen):
 class TestScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.add_widget(Button(text='hey'))
+ 
 
 
 """
