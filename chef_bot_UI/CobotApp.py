@@ -55,11 +55,16 @@ class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+
+class TestS(Widget):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 class TestScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.add_widget(TestS())
  
-
 
 """
 Popup Window for user confirmation of a topping
