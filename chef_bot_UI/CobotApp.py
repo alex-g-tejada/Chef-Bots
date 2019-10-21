@@ -118,7 +118,7 @@ class MainApp(App):
     def build(self):
         self.title = 'Chef Bots'
         self.__init__()
-        return runTouchApp(self.screenmanager)
+        return self.screenmanager
     
     def toppinglist_toString(self):
         s = str(self.toppingList) 
