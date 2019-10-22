@@ -67,7 +67,7 @@ class TestScreen(Screen):
         super(TestScreen, self).__init__(*args, **kwargs)
         self.count_box = 1
         self.add_widget(TestS())
- 
+
 
 """
 Popup Window for user confirmation of a topping
@@ -112,7 +112,6 @@ class MainApp(App):
     toppingList = []
 
     request = 'empty'
-
 
     # Screen Manager 
     #screenmanager = ScreenManager()
