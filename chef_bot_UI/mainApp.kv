@@ -118,7 +118,18 @@
         Rectangle:
             pos: self.pos
             size: self.size
-    
+
+<NavBar_two>:
+    cols: 2
+    size_hint: 1, 0.13
+    pos_hint: {'x': 1, 'top': 1}
+    canvas:
+        Color:
+            rgb: rgba(app.chef_bot_black)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
 # Buttom App Footer
 <FooterBar@GridLayout>:
     rows: 1

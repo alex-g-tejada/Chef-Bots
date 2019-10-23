@@ -54,6 +54,9 @@ class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+class NavBar_two(GridLayout):
+    def __init__(self, *args, **kwargs):
+        super(NavBar_two, self).__init__(*args, **kwargs)
 
 class TestS(BoxLayout):
     def __init__(self, *args, **kwargs):
@@ -65,7 +68,14 @@ class TestScreen(Screen):
     def __init__(self, *args, **kwargs):
         super(TestScreen, self).__init__(*args, **kwargs)
         self.count_box = 1
-        self.add_widget(Button())
+        g = GridLayout()
+        g.cols = 1
+        g.rows = 4
+        g.add_widget(NavBar_two())
+        g.add_widget(Button())
+        g.add_widget(Button())
+        g.add_widget(Button())
+        self.add_widget(g)
 
 
 """
