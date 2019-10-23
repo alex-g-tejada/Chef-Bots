@@ -65,7 +65,7 @@ class TestScreen(Screen):
     def __init__(self, *args, **kwargs):
         super(TestScreen, self).__init__(*args, **kwargs)
         self.count_box = 1
-        self.add_widget(TestS())
+        self.add_widget(Button())
 
 
 """
