@@ -15,6 +15,7 @@ from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.text import LabelBase
+from kivy.properties import StringProperty
 
 # State Machine for the Cobot
 import sys
@@ -26,8 +27,6 @@ from kivy.core.window import Window
 from kivy.config import Config
 Window.size = (800, 500)
 
-# Text Updater
-from kivy.properties import StringProperty
 
 __author__ = 'Alex Tejada'
 
@@ -92,6 +91,13 @@ class MainApp(App):
     cobotController = CobotControl()
     # String holding the state of the controller
     Status = StringProperty(str(cobotController.state))
+    # States
+    RS = "ReceiveState"
+    DS = "DetectionState"
+    SS = "ResponseState"
+    PS = "PinPointState"
+    CS = "CancelOrderState"
+    
     # State Keys
     RC = 'Request Confirmed'
     SC = 'Setup Complete'

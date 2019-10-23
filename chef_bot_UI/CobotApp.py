@@ -4,7 +4,6 @@ import kivy
 # User Interface Components
 from kivy.base import runTouchApp
 from kivy.lang import Builder
-from kivy.base import runTouchApp
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
@@ -55,9 +54,6 @@ class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-
- 
-
 """
 Popup Window for user confirmation of a topping
 """
@@ -81,6 +77,7 @@ class MainApp(App):
     cobotController = CobotControl()
     # String holding the state of the controller
     Status = StringProperty(str(cobotController.state))
+    
     # State Keys
     RC = 'Request Confirmed'
     SC = 'Setup Complete'
@@ -154,13 +151,17 @@ class MainApp(App):
             print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
         
     def Submitbtn(self, instance):
-        if len(self.toppingList) > 0:
+        if self.cobotController.RS != str(self.cobotController.state):
+            print("Not in the receive state.")
+        elif len(self.toppingList) > 0:
             print('[INFO   ] [Cobot App   ] Requesting ', self.toppingList)
             requesting = self.toppinglist_toString()
             show = MenuPopup_Mult()
             self.popupWindow = Popup(title="Requesting: " + requesting + '?', title_align='center', 
                     content=show, size_hint=(None, None), size=(400,250))
             self.popupWindow.open()
+        else:
+            print("Message that no selection was made.")
             
 
     def ConfirmMultSel(self, instance):
@@ -172,7 +173,7 @@ class MainApp(App):
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
         self.popupWindow.dismiss()
-        self.cobotController.on_event(self.RC)
+        self.cobotController.on_event(self.cobotController.RC)
         self.Status = str(self.cobotController.state)
 
     def DeclineSel(self, instance):
@@ -186,9 +187,6 @@ class MainApp(App):
     def AppExit(self, isinstance):
         pass
 
-        # send request to Armando's part
-        # get a reponse from the model 
-        # send to Heidi's part 
 
 # End of app delcaration
 
