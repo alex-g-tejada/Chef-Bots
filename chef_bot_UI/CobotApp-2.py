@@ -58,6 +58,7 @@ class NavBar_two(GridLayout):
     def __init__(self, *args, **kwargs):
         super(NavBar_two, self).__init__(*args, **kwargs)
 
+
 class TestS(BoxLayout):
     def __init__(self, *args, **kwargs):
         super(TestS, self).__init__(*args, **kwargs)
