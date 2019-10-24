@@ -23,6 +23,7 @@ from cobot_state import CobotControl
 # Adjust Window Size for the PI
 from kivy.core.window import Window
 from kivy.config import Config
+Builder.load_file('mainapp.kv')
 Window.size = (800, 500)
 
 # Text Updater
