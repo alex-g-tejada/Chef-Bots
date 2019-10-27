@@ -22,7 +22,7 @@
             radius: self.border_radius
 
 # Greeter Buttons
-<MenuButton2@Button>:
+<MenuButton2@ButtonBehavior+Label>:
     markup: True
     background_color: (0,0,0,0)
     background_normal: ''
@@ -66,6 +66,7 @@
     pos_hint_x: 0
     on_state: app.itemSelect(self.text, self.state)
 
+#
 <MenuLabel@Label>:
     color: 0,0,0,1
     pos_hint_x: 1
@@ -75,7 +76,6 @@
 # Confirmation Popup
 <MenuPopup>:
     id: popup_topping
-    separator_color: rgba(app.chef_bot_secondary)
     title_color: rgba(app.chef_bot_black)
     
     Button:
@@ -92,7 +92,6 @@
 # Confirmation Pop for Mult Select
 <MenuPopup_Mult>:
     id: popup_topping
-    separator_color: rgba(app.chef_bot_secondary)
     title_color: rgba(app.chef_bot_black)
     
     Button:
@@ -155,7 +154,7 @@
 # Panel to Make single selection
 <OneSelectionPanel@GridLayout>:
     cols: 3
-    padding: 100
+    padding: 50
     spacing: 30
     pos_hint: {'x': 0.5, 'y': 0.5}
     canvas:

@@ -1,7 +1,6 @@
 # Main Kivy application class
-from kivy.app import App
 import kivy
-# User Interface Components
+from kivy.app import App
 from kivy.base import runTouchApp
 from kivy.lang import Builder
 from kivy.uix.button import Button
@@ -14,6 +13,7 @@ from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.text import LabelBase
+from kivy.properties import StringProperty
 
 # State Machine for the Cobot
 import sys
@@ -26,9 +26,6 @@ from kivy.config import Config
 Builder.load_file('mainapp.kv')
 Window.size = (800, 500)
 
-# Text Updater
-from kivy.properties import StringProperty
-
 __author__ = 'Alex Tejada'
 
 
@@ -38,7 +35,6 @@ Screen to display individual set of ingredients
 class OneSelectScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-
 
 """
 Screen to allow the user to individually select the ingrients
@@ -101,21 +97,16 @@ class MainApp(App):
     request = 'empty'
 
 
-    # Screen Manager 
-    #screenmanager = ScreenManager()
-
     def MainApp (self):
         self.popupWindow = object()
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.screenmanager = ScreenManager()
-        #self.screenmanager.add_widget(TestScreen(name="test"))
         self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
         self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
         self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
         
-
     def build(self):
         self.title = 'Chef Bots'
         self.__init__()
@@ -133,7 +124,7 @@ class MainApp(App):
         print('[INFO   ] [Cobot App   ] Requesting ', self.request)
         show = MenuPopup()
         self.popupWindow = Popup(title="Requested " + self.request + '?', title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
-                content=show, size_hint=(None, None), size=(500,350), background = 'images/Popup.png')
+                content=show, size_hint=(None, None), size=(400,300), background = 'images/Popup.png')
         self.popupWindow.open()
     
     def itemSelect(self, text, state):
