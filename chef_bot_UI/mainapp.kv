@@ -11,7 +11,6 @@
     size: (180,70)
     size_hint: (None, None)
     border_radius: [18]
-    on_press: app.Pressbtn(self)
     color: rgba(app.chef_bot_black)
     canvas.before:
         Color:
@@ -64,7 +63,7 @@
     background_checkbox_normal:'images/Unchecked-checkbox.png'
     background_checkbox_down:'images/Checked-checkbox.png'
     pos_hint_x: 0
-    on_state: app.itemSelect(self.text, self.state)
+
 
 #
 <MenuLabel@Label>:
@@ -75,7 +74,6 @@
 
 # Confirmation Popup
 <MenuPopup>:
-    id: popup_topping
     title_color: rgba(app.chef_bot_black)
     
     Button:
@@ -91,7 +89,6 @@
         on_press: app.DeclineSel(self)
 # Confirmation Pop for Mult Select
 <MenuPopup_Mult>:
-    id: popup_topping
     title_color: rgba(app.chef_bot_black)
     
     Button:
@@ -304,18 +301,23 @@
             MenuButton:
                 id: T
                 text: 'Tomatoes'
+                on_press: app.Pressbtn(self)
             MenuButton:
                 id: L
                 text: 'Lettuce'
+                on_press: app.Pressbtn(self)
             MenuButton:
                 id: On
                 text: 'Onions'
+                on_press: app.Pressbtn(self)
             MenuButton:
                 id: C
                 text: 'Cheese'
+                on_press: app.Pressbtn(self)
             MenuButton:
                 id: P
                 text: 'Pickles'
+                on_press: app.Pressbtn(self)
         FooterBar:
 
 # Screen 3s
@@ -404,28 +406,34 @@
 
             MenuCheckBox:
                 text: app.tomatoes
+                on_state: app.itemSelect(self.text, self.state)
 
             MenuLabel:
                 text: app.lettuce
 
             MenuCheckBox:
                 text: app.lettuce
+                on_state: app.itemSelect(self.text, self.state)
 
             MenuLabel:
                 text: app.pickles
 
             MenuCheckBox:
                 text: app.pickles
+                on_state: app.itemSelect(self.text, self.state)
             MenuLabel:
                 text: app.cheese
 
             MenuCheckBox:
                 text: app.cheese
+                on_state: app.itemSelect(self.text, self.state)
+
             MenuLabel:
                 text: app.onions
 
             MenuCheckBox:
                 text: app.onions
+                on_state: app.itemSelect(self.text, self.state)
         
         # B
         BoxLayout:

@@ -1,7 +1,6 @@
 # Main Kivy application class
 import kivy
 from kivy.app import App
-from kivy.base import runTouchApp
 from kivy.lang import Builder
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
@@ -27,6 +26,7 @@ Builder.load_file('mainapp.kv')
 Window.size = (800, 500)
 
 __author__ = 'Alex Tejada'
+
 
 
 """
@@ -131,6 +131,7 @@ class MainApp(App):
     def itemSelect(self, text, state):
         is_box_on = state
         print('[INFO   ] [Cobot App   ] Checkbox State: ', is_box_on)
+        print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
         
         if is_box_on == 'down':
             item = text
@@ -150,8 +151,8 @@ class MainApp(App):
             print('[INFO   ] [Cobot App   ] Requesting ', self.toppingList)
             requesting = self.toppinglist_toString()
             show = MenuPopup_Mult()
-            self.popupWindow = Popup(title="Requesting: " + requesting + '?', title_align='center', 
-                    content=show, size_hint=(None, None), size=(400,250))
+            self.popupWindow = Popup(title="Requesting: " + requesting + '?', title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
+                    content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
             self.popupWindow.open()
         else:
             print("Message that no selection was made.")
