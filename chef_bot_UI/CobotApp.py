@@ -98,7 +98,7 @@ class MainApp(App):
 
 
     def MainApp (self):
-        self.popupWindow = object()
+        pass
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -106,6 +106,7 @@ class MainApp(App):
         self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
         self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
         self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
+        self.popupWindow = object()
         
     def build(self):
         self.title = 'Chef Bots'
@@ -155,7 +156,6 @@ class MainApp(App):
         else:
             print("Message that no selection was made.")
             
-
     def ConfirmMultSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Confirmed. ')
         self.popupWindow.dismiss()
@@ -168,6 +168,7 @@ class MainApp(App):
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.cobotController.RC)
         self.Status = str(self.cobotController.state)
+        #self.cobotController.run_state('start')
 
     def DeclineSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Cancelled. ')
