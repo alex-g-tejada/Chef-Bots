@@ -1,6 +1,7 @@
 #:kivy 1.10.1
 # File
-# Menu Buttons #
+# Menu Items #
+#
 # Individual items Buttons
 <MenuButton@Button>:
     markup: True
@@ -27,11 +28,11 @@
     background_normal: ''
     back_color: (1, 0, 1, 1)
     border_radius: [18]
-    size: (180,70)
+    size: (200,70)
     size_hint: (None, None)
     border_radius: [18]
+    font_name: 'Roboto-Regular.ttf'
     color: rgba(app.chef_bot_black)
-    font_name: 'fonts/Roboto-Regular.ttf'
     canvas.before:
         Color:
             rgba: rgba(app.chef_bot_primary)
@@ -43,13 +44,12 @@
 <HeaderButton@Button>:
     markup: True
     background_color: (0,0,0,0)
-    background_normal: ''
     back_color: (1, 0, 1, 1)
     border_radius: [18]
     size: (80,30)
     size_hint: (None, None)
     border_radius: [18]
-    color: rgba(app.chef_bot_black)
+    #color: rgba(app.chef_bot_black)
     canvas.before:
         Color:
             rgba: rgba(app.chef_bot_primary)
@@ -57,6 +57,11 @@
             size: self.size
             pos: self.pos
             radius: self.border_radius
+# Default Popup Button Design
+<PopupBtn@Button>:
+    background_normal: "images/btn_popup.png"
+    color: rgba(app.chef_bot_black) #0,0,0,1
+    border: 10,10,10,10
 # Checkbox - Multi-select
 <MenuCheckBox@CheckBox>:
     size: (80,30)
@@ -66,12 +71,26 @@
 
 
 #
+<BtnStack@StackLayout>:
+    pos: self.parent.pos
+    size: self.parent.size
+    orientation: 'lr-tb'
+    spacing: 10
+
 <MenuLabel@Label>:
     color: 0,0,0,1
-    pos_hint_x: 1
+    size_hint_x: None
+    width: 100
     font_name: 'fonts/Roboto-Regular.ttf'
-# Checkbox Area
 
+<MenuImg@Image>:
+    size_hint_x: None
+    width: 60
+
+
+
+# Larger Body Components #
+#
 # Confirmation Popup
 <MenuPopup>:
     title_color: rgba(app.chef_bot_black)
@@ -87,20 +106,21 @@
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.4}
         on_press: app.DeclineSel(self)
+
 # Confirmation Pop for Mult Select
 <MenuPopup_Mult>:
     title_color: rgba(app.chef_bot_black)
     
-    Button:
+    PopupBtn:
         text: 'Yes'
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.ConfirmMultSel(self)
 
-    Button:
+    PopupBtn:
         text: 'No'
         size_hint: 0.6, 0.2
-        pos_hint: {'x': 0.2, 'y': 0.4}
+        pos_hint: {'x': 0.2, 'y': 0.3}
         on_press: app.DeclineSel(self)
 
 # Top NavBar
@@ -205,7 +225,8 @@
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint: 1, 0.2
+            size_hint: 1, 0.3
+            spacing: 20
             canvas:
                 Color:
                     rgb: rgba('FDFFFC')
@@ -213,35 +234,51 @@
                     pos: self.pos
                     size: self.size  
             MenuLabel:
-                text: "Welcome! Click an option to start"
-                size_hint_y: 0.1
-                pos_hint_y: 0
-                #color: 0,0,0,1
+                text: "Welcome to the collaborative robot!"
+                font_size: 20
+                size_hint: (1, None)
+                height: 20
+            
+            MenuLabel:
+                text: "Click an option to start"
+                size_hint: (1, None)
+                height: 15
+                
 
         GreeterPanel:
             MenuButton2:
                 id: T
-                text: 'Individual Items'
                 on_press: 
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "screen_two"
+                BtnStack:
+                    MenuImg:
+                        source: 'images/burger.png'
+                    MenuLabel:
+                        text: 'Individual Items'
+                
             MenuButton2:
                 id: L
-                text: 'Mult Selections'
-                #font_name: 'resources/Robot-Regular.ttf'
+                bold: True
                 on_press: 
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "screen_three"
+                BtnStack:
+                    MenuImg:
+                        source: 'images/checklist.png'
+                    MenuLabel:
+                        text: 'Custom Selection'
+                
             MenuButton2:
                 id: L
-                text: 'Exit'
-                on_press: 
-                    root.manager.transition.direction = "left"
-                    root.manager.transition.duration = 1
-                    root.manager.current = "screen_three"
                 on_press: app.get_running_app().stop()
+                BtnStack:
+                    MenuImg:
+                        source: 'images/exit.png'
+                    MenuLabel:
+                        text: 'Exit'
             
         FooterBar:
 
@@ -385,7 +422,7 @@
             MenuLabel:
                 text: "Select the ingredients to apply"
                 size_hint: 0.5, 0.5
-                pos_hint: {'y': 0, 'right': 0.75} 
+                pos_hint: {'right': 0.75, 'top':0} 
                 #color: 0,0,0,1
             
 

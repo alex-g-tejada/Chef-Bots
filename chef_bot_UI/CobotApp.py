@@ -125,7 +125,7 @@ class MainApp(App):
         print('[INFO   ] [Cobot App   ] Requesting ', self.request)
         show = MenuPopup()
         self.popupWindow = Popup(title="Requested " + self.request + '?', title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
-                content=show, size_hint=(None, None), size=(400,300), background = 'images/Popup.png')
+                content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
         self.popupWindow.open()
     
     def itemSelect(self, text, state):
@@ -162,7 +162,7 @@ class MainApp(App):
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.RC)
         self.Status = str(self.cobotController.state)
-        self.cobotController.run_state("RC")
+        #self.cobotController.run_state("RC")
 
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
