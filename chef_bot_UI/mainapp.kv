@@ -40,6 +40,7 @@
             size: self.size
             pos: self.pos
             radius: self.border_radius
+        
 # NavBar Buttons
 <HeaderButton@Button>:
     markup: True
@@ -49,19 +50,41 @@
     size: (80,30)
     size_hint: (None, None)
     border_radius: [18]
-    #color: rgba(app.chef_bot_black)
+    color: rgba(app.chef_bot_black)
     canvas.before:
         Color:
-            rgba: rgba(app.chef_bot_primary)
+            rgba: rgba(app.chef_bot_secondary)
         RoundedRectangle:
             size: self.size
             pos: self.pos
             radius: self.border_radius
+
+<CancelBtn>:
+    #enabled: False
+    size_hint: None, 0.8
+    pos: (300,0)
+    width: 200
+
 # Default Popup Button Design
 <PopupBtn@Button>:
-    background_normal: "images/btn_popup.png"
-    color: rgba(app.chef_bot_black) #0,0,0,1
-    border: 10,10,10,10
+    markup: True
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1, 0, 1, 1)
+    border_radius: [18]
+    size: (180,70)
+    size_hint: (None, None)
+    border_radius: [18]
+    color: rgba(app.chef_bot_black)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_secondary)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+
+    
 # Checkbox - Multi-select
 <MenuCheckBox@CheckBox>:
     size: (80,30)
@@ -70,7 +93,7 @@
     pos_hint_x: 0
 
 
-#
+# 
 <BtnStack@StackLayout>:
     pos: self.parent.pos
     size: self.parent.size
@@ -95,16 +118,16 @@
 <MenuPopup>:
     title_color: rgba(app.chef_bot_black)
     
-    Button:
+    PopupBtn:
         text: 'Yes'
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.ConfirmSel(self)
 
-    Button:
+    PopupBtn:
         text: 'No'
         size_hint: 0.6, 0.2
-        pos_hint: {'x': 0.2, 'y': 0.4}
+        pos_hint: {'x': 0.2, 'y': 0.3}
         on_press: app.DeclineSel(self)
 
 # Confirmation Pop for Mult Select
@@ -116,6 +139,24 @@
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.ConfirmMultSel(self)
+
+    PopupBtn:
+        text: 'No'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.3}
+        on_press: app.DeclineSel(self)
+
+# Cancel Message
+<MenuPopup_Can>:
+    id: PopupCan
+    title_color: rgba(app.chef_bot_black)
+    
+    PopupBtn:
+        text: 'Yes'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.6}
+        on_press: app.stopOrder(self)
+        on_release: root.dismissPopup(self)
 
     PopupBtn:
         text: 'No'
@@ -151,29 +192,26 @@
     rows: 1
     size_hint: 1, None
     height: 50
+    spacing: 10
     canvas:
         Color:
             rgb: rgba(app.chef_bot_black)
         Rectangle:
             pos: self.pos
             size: self.size
-    Label:
+    #Label:
         #text: app.Status
-        color: rgba('FDFFFC')
-        pos_hint_x: 0.15
-        bold: True
-    Label:
-        text: ''
-        color: rgba('FDFFFC')
-        pos_hint_x: 0.4
-        bold: True
+        #color: rgba('FDFFFC')
+        #pos_hint_x: 0.15
+        #bold: True
+
 
 # Panels #
 # Panel to Make single selection
 <OneSelectionPanel@GridLayout>:
-    cols: 3
+    cols: 1
     padding: 50
-    spacing: 20
+    #spacing: 20
     size_hint: 0.5,  0.5
     canvas:
         Color:
@@ -302,8 +340,6 @@
                 size_hint: 1, 1
                 HeaderButton:
                     text: 'Home'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = 1
@@ -311,8 +347,6 @@
                 
                 HeaderButton:
                     text: 'Single'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
@@ -320,8 +354,6 @@
 
                 HeaderButton:
                     text: 'Mult'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
@@ -329,32 +361,40 @@
 
                 HeaderButton:
                     text: 'Exit'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: app.get_running_app().stop()  
         
         # Main
         OneSelectionPanel:
-            MenuButton:
-                id: T
-                text: 'Tomatoes'
-                on_press: app.Pressbtn(self)
-            MenuButton:
-                id: L
-                text: 'Lettuce'
-                on_press: app.Pressbtn(self)
-            MenuButton:
-                id: On
-                text: 'Onions'
-                on_press: app.Pressbtn(self)
-            MenuButton:
-                id: C
-                text: 'Cheese'
-                on_press: app.Pressbtn(self)
-            MenuButton:
-                id: P
-                text: 'Pickles'
-                on_press: app.Pressbtn(self)
+            MenuLabel:
+                text: "Welcome to the collaborative robot!"
+                font_size: 20
+                size_hint: (1, None)
+                height: 20
+            GridLayout:
+                padding: 50
+                spacing: 30
+                cols: 3
+                size_hint: 1,1
+                MenuButton:
+                    id: T
+                    text: 'Plain'
+                    on_press: app.Pressbtn(self)
+                MenuButton:
+                    id: L
+                    text: 'Deluxe'
+                    on_press: app.Pressbtn(self)
+                MenuButton:
+                    id: On
+                    text: '-'
+                    on_press: app.Pressbtn(self)
+                MenuButton:
+                    id: C
+                    text: '--'
+                    on_press: app.Pressbtn(self)
+                MenuButton:
+                    id: P
+                    text: '--'
+                    on_press: app.Pressbtn(self)
         FooterBar:
 
 # Screen 3s
@@ -376,8 +416,6 @@
                 size_hint: 1, 1
                 HeaderButton:
                     text: 'Home'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = 1
@@ -385,8 +423,6 @@
                 
                 HeaderButton:
                     text: 'Single'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
@@ -394,8 +430,6 @@
 
                 HeaderButton:
                     text: 'Mult'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: 
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
@@ -403,8 +437,6 @@
 
                 HeaderButton:
                     text: 'Exit'
-                    color: rgba('FDFFFC')
-                    bold: True
                     on_press: app.get_running_app().stop()  
 
         
@@ -412,7 +444,8 @@
         #
         BoxLayout:
             orientation: 'vertical'
-            size_hint: 1, 0.10
+            size_hint: 1, 0.2
+            spacing: 20
             canvas:
                 Color:
                     rgb: rgba('FDFFFC')
@@ -492,3 +525,9 @@
 
             
         FooterBar:
+            CancelBtn:
+                id: cbtn
+                text: 'Cancel'
+            
+                
+                

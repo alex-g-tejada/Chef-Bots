@@ -12,7 +12,7 @@ from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.text import LabelBase
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, BooleanProperty
 
 # State Machine for the Cobot
 import sys
@@ -26,6 +26,44 @@ Builder.load_file('mainapp.kv')
 Window.size = (800, 500)
 
 __author__ = 'Alex Tejada'
+
+class CancelBtn(Button):
+    
+    #enabled = BooleanProperty(False)
+
+    def __init__(self, *args, **kwargs):
+        super(CancelBtn, self).__init__(*args, **kwargs)
+        self.popupWindow = object()
+        CancelBtn.disabled = False
+        print('[INFO   ] [Cobot btn   ] Could cancel ', CancelBtn.disabled)
+
+    def on_enabled(self, value):
+        if value:
+            print('[INFO   ] [Cobot btn   ] Could cancel ', value)
+            self.background_color = [1,1,1,1]
+            self.color = [1,1,1,1]
+            CancelBtn.disabled = value
+            print('[INFO   ] [Cobot btn   ] ', CancelBtn.disabled)
+        else:
+            self.background_color = [1,1,1,.3]
+            self.color = [1,1,1,.5]
+
+    def on_press2(self):
+        print('[INFO   ] [Cobot App   ] Cancel Popup Activated')
+        show = MenuPopup_Can()
+        self.popupWindow = Popup(title="Cancel order?", title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
+                content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
+        self.popupWindow.open()
+
+    def dismissPopup(self):
+        self.popupWindow.open()
+
+    def on_touch_down(self, touch):
+        
+        if True == CancelBtn.disabled:
+            print('[INFO   ] [Cobot App   ] Cancel Button Push ', CancelBtn.disabled)
+            self.on_press2()
+    
 
 
 
@@ -58,6 +96,9 @@ class MenuPopup(FloatLayout):
     pass
 
 class MenuPopup_Mult(FloatLayout):
+    pass
+
+class MenuPopup_Can(FloatLayout):
     pass
 
 class MainApp(App):
@@ -103,6 +144,7 @@ class MainApp(App):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.screenmanager = ScreenManager()
+        self.Cbtn = CancelBtn()
         self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
         self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
         self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
@@ -135,12 +177,10 @@ class MainApp(App):
         
         if is_box_on == 'down':
             item = text
-            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', text)
             self.toppingList.append(item)
             print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
         elif is_box_on == 'normal':
             item = text
-            print('[INFO   ] [Cobot App   ] Checkbox Selected: ', text)
             self.toppingList.remove(item)
             print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
         
@@ -162,6 +202,7 @@ class MainApp(App):
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.RC)
         self.Status = str(self.cobotController.state)
+        self.Cbtn.on_enabled(True)
         #self.cobotController.run_state("RC")
 
     def ConfirmSel(self, instance):
@@ -177,7 +218,13 @@ class MainApp(App):
 
     def DeclineSel_Mult(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Cancelled. ')
-        self.popupWindow.dismiss()
+
+
+    def stopOrder(self, instance):
+        print('[INFO   ] [Cobot RCS   ] Returning to ReceiveState...')
+        self.cobotController.on_event(self.RC)
+        
+
 
     def AppExit(self, isinstance):
         pass
