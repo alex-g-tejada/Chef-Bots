@@ -62,12 +62,10 @@ class PinPointState(State):
 class CancelOrderState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("code start up!!")
 
     def on_event(self, event):
         if event == 'Request Completed':
             # Reset topping to default
-            self.orderTopping = 'None'
             return ReceiveState
         return self 
 
