@@ -59,11 +59,27 @@
             pos: self.pos
             radius: self.border_radius
 
-<CancelBtn>:
+<CancelBtn@Button>:
     #enabled: False
-    size_hint: None, 0.8
-    pos: (300,0)
+    size_hint: None, 
+    pos: (300,10)
     width: 200
+    markup: True
+    background_color: (0,0,0,0)
+    background_normal: ''
+    back_color: (1, 0, 1, 1)
+    border_radius: [18]
+    size: (90,40)
+    size_hint: (None, None)
+    border_radius: [18]
+    color: rgba(app.chef_bot_black)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_secondary)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
 
 # Default Popup Button Design
 <PopupBtn@Button>:
@@ -150,13 +166,12 @@
 <MenuPopup_Can>:
     id: PopupCan
     title_color: rgba(app.chef_bot_black)
-    
     PopupBtn:
         text: 'Yes'
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.stopOrder(self)
-        on_release: root.dismissPopup(self)
+
 
     PopupBtn:
         text: 'No'
@@ -366,7 +381,7 @@
         # Main
         OneSelectionPanel:
             MenuLabel:
-                text: "Welcome to the collaborative robot!"
+                text: "Select a Premade Option"
                 font_size: 20
                 size_hint: (1, None)
                 height: 20
@@ -396,6 +411,15 @@
                     text: '--'
                     on_press: app.Pressbtn(self)
         FooterBar:
+            GridLayout:
+                rows: 1
+                spacing: 10, 10
+                padding: 10, 10
+                size_hint: 1, 1
+                CancelBtn:
+                    id: cbtn
+                    text: 'Cancel'
+                    on_press: app.Cancel(self)
 
 # Screen 3s
 <MultSelectScreen>:
@@ -462,7 +486,7 @@
         GridLayout:
             cols: 6
             spacing: 10, 10
-            size_hint: 0.6, 0.5
+            size_hint: 0.6, 0.6
             padding: 70
             canvas:
                 Color:
@@ -525,9 +549,15 @@
 
             
         FooterBar:
-            CancelBtn:
-                id: cbtn
-                text: 'Cancel'
+            GridLayout:
+                rows: 1
+                spacing: 10, 10
+                padding: 10, 10
+                size_hint: 1, 1
+                CancelBtn:
+                    id: cbtn
+                    text: 'Cancel'
+                    on_press: app.Cancel(self)
             
                 
                 

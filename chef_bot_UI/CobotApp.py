@@ -48,21 +48,12 @@ class CancelBtn(Button):
             self.background_color = [1,1,1,.3]
             self.color = [1,1,1,.5]
 
-    def on_press2(self):
-        print('[INFO   ] [Cobot App   ] Cancel Popup Activated')
-        show = MenuPopup_Can()
-        self.popupWindow = Popup(title="Cancel order?", title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
-                content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
-        self.popupWindow.open()
-
-    def dismissPopup(self):
-        self.popupWindow.open()
-
     def on_touch_down(self, touch):
         
         if True == CancelBtn.disabled:
             print('[INFO   ] [Cobot App   ] Cancel Button Push ', CancelBtn.disabled)
-            self.on_press2()
+            self.on_press()
+            return super(self.__class__, self).on_touch_down(touch)
     
 
 
@@ -218,11 +209,25 @@ class MainApp(App):
 
     def DeclineSel_Mult(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Cancelled. ')
+        self.popupWindow.dismiss()
+    
+    def DeclineSel(self, instance):
+        self.popupWindow.dismiss()
 
+    def Cancel(self, instance):
+        if self.cobotController.RS != str(self.cobotController.state):
+            show = MenuPopup_Can()
+            self.popupWindow = Popup(title="Cancel order?", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
+                    content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
+            self.popupWindow.open()
+    
 
     def stopOrder(self, instance):
         print('[INFO   ] [Cobot RCS   ] Returning to ReceiveState...')
-        self.cobotController.on_event(self.RC)
+        self.popupWindow.dismiss()
+        self.cobotController.on_event(self.ER)
+        self.cobotController.state_reset()
+        print('[INFO   ] [Cobot RCS   ] Done')
         
 
 
