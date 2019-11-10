@@ -1,4 +1,5 @@
 from state import State
+import time
 
 
 """
@@ -8,6 +9,11 @@ The Defualt State: ReceoveState
 
 """
 class ReceiveState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("[INFO   ] [Cobot RCS   ] [Receive     ] Initializing cobot...")
+        print("[INFO   ] [Cobot RCS   ] [Receive     ] Ready for new request")
+    
     def on_event(self, event):
         if event == 'Request Confirmed':
             return DetectionState()
@@ -17,6 +23,8 @@ class ReceiveState(State):
 class DetectionState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        print("[INFO   ] [Cobot RCS   ] [Dectection  ] Initializing camera...")
+        print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
         #self.run_state()
     
     def run_state(self, event):
@@ -34,14 +42,16 @@ class DetectionState(State):
 class ResponseState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("code start up!!")
+        print("[INFO   ] [Cobot RCS   ] [Response    ] Analyzing request...")
+        print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
+        #time.sleep(5)
         # AI Code Here #
 
 
     def on_event(self, event):
         if event == 'Not Found':
             return CancelOrderState()
-        elif event == 'Found':
+        elif event == 'Found Request':
             return PinPointState()
         elif event == 'Error':
             return CancelOrderState()
@@ -50,7 +60,8 @@ class ResponseState(State):
 class PinPointState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print("code start up!!")
+        print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Moving arm...")
+        print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done")
         # Arm Code Here #
     
     def on_event(self, event):
@@ -64,6 +75,7 @@ class PinPointState(State):
 class CancelOrderState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
 
     def on_event(self, event):
         if event == 'Request Completed':
