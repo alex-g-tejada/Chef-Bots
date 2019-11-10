@@ -1,7 +1,6 @@
 # cobot_state.py
 from cobot_states import ReceiveState
 
-
 """
 This will act as the cobot control device that will hold one state to
 control the cobot functionality
@@ -30,6 +29,8 @@ class CobotControl(object):
         self.FR = 'Found Request'
         self.PC = 'Point Complete'
         self.FC = 'Request Completed'
+        # List of toppings to find
+        self.OrderList = []
     
     """
     The control will pass the event to change the state if the proper
