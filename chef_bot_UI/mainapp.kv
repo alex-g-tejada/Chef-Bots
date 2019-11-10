@@ -172,12 +172,21 @@
         pos_hint: {'x': 0.2, 'y': 0.6}
         on_press: app.stopOrder(self)
 
-
     PopupBtn:
         text: 'No'
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.3}
-        on_press: app.DeclineSel(self)
+        on_press: app.Dismiss(self)
+
+<MenuPopup_Error>:
+    id: PopupCan
+    title_color: rgba(app.chef_bot_black)
+    PopupBtn:
+        text: 'Okay'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.5}
+        on_press: app.Dismiss(self)
+
 
 # Top NavBar
 <NavBar@GridLayout>:
