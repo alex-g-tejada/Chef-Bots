@@ -17,9 +17,11 @@ class ReceiveState(State):
 class DetectionState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        #self.run_state()
     
     def run_state(self, event):
         print("Initalize Camera")
+        return True
 
     
     def on_event(self, event):
