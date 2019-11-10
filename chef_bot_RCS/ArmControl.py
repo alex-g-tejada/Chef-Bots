@@ -161,3 +161,6 @@ class CancelOrderState(State):
             self.orderTopping = 'None'
             return ReceiveState
         return self 
+
+if __name__ == "__main__":  
+    app = arm_controller()
