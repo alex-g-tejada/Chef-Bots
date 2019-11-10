@@ -151,6 +151,15 @@ class MainApp(App):
         s = s.replace("]","")
         return s
 
+    def getOrder(self, order):
+        if order == 'Deluxe':
+            self.toppingList.extend([self.tomatoes, self.lettuce, self.pickles, self.cheese, self.onions])
+        elif order == 'Plain':
+            self.toppingList.extend([self.pickles, self.cheese])
+        else: 
+            self.toppingList.append(self.tomatoes)
+        pass
+
     def Pressbtn(self, instance):
         if self.cobotController.RS != str(self.cobotController.state):
             print("[INFO   ] [Cobot App   ] Not in the receive state.")
@@ -158,9 +167,10 @@ class MainApp(App):
         else:
             self.request = instance.text
             print('[INFO   ] [Cobot App   ] Requesting ', self.request)
+            self.getOrder(self.request)
             show = MenuPopup()
-            self.popupWindow = Popup(title="Requested " + self.request + '?', title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
-                    content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
+            self.popupWindow = Popup(title="Requested " + self.request + ': ' + self.toppinglist_toString(), title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
+                    content=show, size_hint=(None, None), size=(350,250), background = 'images/Popup2.png')
             self.popupWindow.open()
     
     def itemSelect(self, text, state):
@@ -194,10 +204,13 @@ class MainApp(App):
             requesting = self.toppinglist_toString()
             show = MenuPopup_Mult()
             self.popupWindow = Popup(title="Requesting: " + requesting + '?', title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
-                    content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
+                    content=show, size_hint=(None, None), size=(350,250), background = 'images/Popup2.png')
             self.popupWindow.open()
         else:
-            print("Message that no selection was made.")
+            show = MenuPopup_Error()
+            self.popupWindow = Popup(title="No selection was made", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
+                    content=show, size_hint=(None, None), size=(280,200), background = 'images/Popup2.png')
+            self.popupWindow.open()
             
     def ConfirmMultSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Confirmed. ')
@@ -229,7 +242,7 @@ class MainApp(App):
         if self.cobotController.RS != str(self.cobotController.state):
             show = MenuPopup_Can()
             self.popupWindow = Popup(title="Cancel order?", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
-                    content=show, size_hint=(None, None), size=(450,400), background = 'images/Popup.png')
+                    content=show, size_hint=(None, None), size=(300,200), background = 'images/Popup2.png')
             self.popupWindow.open()
         else:
             show = MenuPopup_Error()
