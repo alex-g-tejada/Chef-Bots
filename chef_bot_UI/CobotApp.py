@@ -151,6 +151,16 @@ class MainApp(App):
         s = s.replace("]","")
         return s
 
+    def startOperation(self):
+        # Entering Detection State
+        self.cobotController.on_event(self.RC)
+        # Entering Response State
+        self.cobotController.on_event(self.SC)
+        # Entering PinPoint State
+        self.cobotController.on_event(self.FR)
+        # Completing Order
+        self.cobotController.on_event(self.PC)
+
     def getOrder(self, order):
         if order == 'Deluxe':
             self.toppingList.extend([self.tomatoes, self.lettuce, self.pickles, self.cheese, self.onions])
@@ -187,7 +197,6 @@ class MainApp(App):
             self.toppingList.remove(item)
             print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
     
-
     def requestError(self):
         show = MenuPopup_Error()
         self.popupWindow = Popup(title="A previous order is still processing ", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
@@ -215,16 +224,16 @@ class MainApp(App):
     def ConfirmMultSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Confirmed. ')
         self.popupWindow.dismiss()
-        self.cobotController.on_event(self.RC)
-        self.Status = str(self.cobotController.state)
         self.Cbtn.on_enabled(True)
+        self.startOperation()
+        #self.Status = str(self.cobotController.state)
         #self.cobotController.run_state("RC")
 
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
         self.popupWindow.dismiss()
-        self.cobotController.on_event(self.cobotController.RC)
-        self.Status = str(self.cobotController.state)
+        self.startOperation()
+        #self.Status = str(self.cobotController.state)
         #self.cobotController.run_state('start')
 
     def DeclineSel(self, instance):
@@ -255,11 +264,11 @@ class MainApp(App):
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.ER)
         self.cobotController.state_reset()
+        self.toppingList = []
         print('[INFO   ] [Cobot RCS   ] Done')
         
     def AppExit(self, isinstance):
         pass
-
 
 # End of app delcaration
 

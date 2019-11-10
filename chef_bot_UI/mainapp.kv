@@ -61,15 +61,14 @@
 
 <CancelBtn@Button>:
     #enabled: False
-    size_hint: None, 
-    pos: (300,10)
-    width: 200
+    size_hint: None, None
+    pos_hint: {'x': 0.2, "top": 0.5}    
     markup: True
     background_color: (0,0,0,0)
     background_normal: ''
     back_color: (1, 0, 1, 1)
     border_radius: [18]
-    size: (90,40)
+    size: (150,40)
     size_hint: (None, None)
     border_radius: [18]
     color: rgba(app.chef_bot_black)
@@ -390,8 +389,8 @@
         # Main
         OneSelectionPanel:
             MenuLabel:
-                text: "Select a Premade Option"
-                font_size: 20
+                text: "Select a premade option"
+                font_size: 15
                 size_hint: (1, None)
                 height: 20
             GridLayout:
@@ -427,7 +426,7 @@
                 size_hint: 1, 1
                 CancelBtn:
                     id: cbtn
-                    text: 'Cancel'
+                    text: 'Cancel Order'
                     on_press: app.Cancel(self)
 
 # Screen 3s
@@ -477,26 +476,27 @@
         #
         BoxLayout:
             orientation: 'vertical'
-            size_hint: 1, 0.2
+            size_hint: 1, 0.15
             spacing: 20
             canvas:
                 Color:
-                    rgb: rgba('FDFFFC')
+                    rgb: rgba(app.chef_bot_light)
                 Rectangle:
                     pos: self.pos
                     size: self.size  
             MenuLabel:
                 text: "Select the ingredients to apply"
                 size_hint: 0.5, 0.5
+                font_size: 15
                 pos_hint: {'right': 0.75, 'top':0} 
                 #color: 0,0,0,1
             
 
         GridLayout:
             cols: 6
-            spacing: 10, 10
-            size_hint: 0.6, 0.6
-            padding: 70
+            spacing: 5, 5
+            size_hint: 1, 0.4
+            padding: 40
             canvas:
                 Color:
                     rgb: rgba(app.chef_bot_light)
@@ -542,7 +542,7 @@
         BoxLayout:
             orientation: 'vertical'
             padding: 20
-            size_hint: 1, 0.1
+            size_hint: 1, 0.2
             canvas:
                 Color:
                     rgb: rgba(app.chef_bot_light)
@@ -565,7 +565,7 @@
                 size_hint: 1, 1
                 CancelBtn:
                     id: cbtn
-                    text: 'Cancel'
+                    text: 'Cancel Order'
                     on_press: app.Cancel(self)
             
                 
