@@ -2,23 +2,18 @@
 import kivy
 from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.pagelayout import PageLayout
-from kivy.uix.widget import Widget 
-from kivy.uix.actionbar import ActionBar, ActionButton
 from kivy.uix.popup import Popup
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.uix.button import Button
 from kivy.core.text import LabelBase
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty, BooleanProperty
 
 # State Machine for the Cobot
 import sys
 sys.path.append('../chef_bot_RCS/')
 from cobot_state import CobotControl
-
+#from chef_bot_RCS.cobot_state import CobotControl
 # Adjust Window Size for the PI
 from kivy.core.window import Window
 from kivy.config import Config
@@ -52,7 +47,6 @@ class CancelBtn(Button):
             self.on_press()
             return super(self.__class__, self).on_touch_down(touch)
     
-
 """
 Screen to display individual set of ingredients
 """
