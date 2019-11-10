@@ -62,7 +62,7 @@ class PinPointState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Moving arm...")
-	armControl = arm_controller()
+        armControl = arm_controller()
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done")
         # Arm Code Here #
     
