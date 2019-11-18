@@ -1,5 +1,6 @@
 from state import State
-from ArmControl import arm_controller
+from threading import Thread
+from ult import Threadingclass
 import time
 
 
@@ -14,7 +15,7 @@ class ReceiveState(State):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Receive     ] Initializing cobot...")
         print("[INFO   ] [Cobot RCS   ] [Receive     ] Ready for new request")
-    
+
     def on_event(self, event):
         if event == 'Request Confirmed':
             return DetectionState()
@@ -27,12 +28,12 @@ class DetectionState(State):
         print("[INFO   ] [Cobot RCS   ] [Dectection  ] Initializing camera...")
         print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
         #self.run_state()
-    
+
     def run_state(self, event):
         print("Initalize Camera")
         return True
 
-    
+
     def on_event(self, event):
         if event == 'Setup Complete':
             return ResponseState()
@@ -45,7 +46,18 @@ class ResponseState(State):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Response    ] Analyzing request...")
         print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
-        #time.sleep(5)
+
+        '''# AI Code Here #
+        This is just for the multithreading portion
+
+        classObject = Threadingclass()
+        t = Thread(target=classObject.longFunction, args=(2, 6))
+        # set daemon to true so the thread dies when app is closed
+        t.daemon = True
+        # start the thread
+        t.start()
+        '''
+
         # AI Code Here #
 
 
@@ -62,10 +74,10 @@ class PinPointState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Moving arm...")
-        armControl = arm_controller()
+        #armControl = arm_controller()
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done")
         # Arm Code Here #
-    
+
     def on_event(self, event):
         if event == 'Point Complete':
             return ReceiveState()
@@ -83,5 +95,4 @@ class CancelOrderState(State):
         if event == 'Request Completed':
             # Reset topping to default
             return ReceiveState
-        return self 
-
+        return self

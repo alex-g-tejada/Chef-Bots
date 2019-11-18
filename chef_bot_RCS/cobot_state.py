@@ -8,7 +8,7 @@ control the cobot functionality
 class CobotControl(object):
 
     """
-    Control constructor that will set the default state as the 
+    Control constructor that will set the default state as the
     ReceiveState to await new user input. The controller defines
     the available states in the state machine as well as the keys
     to move one state to another
@@ -31,10 +31,12 @@ class CobotControl(object):
         self.FC = 'Request Completed'
         # List of toppings to find
         self.OrderList = []
-    
+        # Thread
+        self.thread = []
+
     """
     The control will pass the event to change the state if the proper
-    event has occurred with the cooresponding state. Event will be the 
+    event has occurred with the cooresponding state. Event will be the
     state keys: string text from the main program.
     """
     def on_event(self, event):
