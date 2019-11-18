@@ -151,10 +151,13 @@ class MainApp(App):
     def startOperation(self):
         # Entering Detection State
         self.cobotController.on_event(self.RC)
+        self.cobotController.run_state()
         # Entering Response State
         self.cobotController.on_event(self.SC)
+        self.cobotController.run_state()
         # Entering PinPoint State
         self.cobotController.on_event(self.FR)
+        self.cobotController.run_state()
         # Completed Order
         self.requestMessage(self.message_complete)
         #self.cobotController.on_event(self.PC)

@@ -21,17 +21,24 @@ class ReceiveState(State):
             return DetectionState()
         return self
 
+    def run_state(self):
+        print('No action avaliable - ReceiveState')
 
 class DetectionState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Dectection  ] Initializing camera...")
-        print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
+    
         #self.run_state()
 
-    def run_state(self, event):
-        print("Initalize Camera")
-        return True
+    def run_state(self):
+        try:
+            # Camera setup code #
+
+
+            print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
+        except:
+            print("[INFO   ] [Cobot RCS   ] [Dectection  ] Camera could not initalize")
 
 
     def on_event(self, event):
@@ -45,20 +52,16 @@ class ResponseState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Response    ] Analyzing request...")
-        print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
 
-        '''# AI Code Here #
-        This is just for the multithreading portion
+    def run_state(self):
+        try:
+            # AI Code Here #
 
-        classObject = Threadingclass()
-        t = Thread(target=classObject.longFunction, args=(2, 6))
-        # set daemon to true so the thread dies when app is closed
-        t.daemon = True
-        # start the thread
-        t.start()
-        '''
 
-        # AI Code Here #
+            print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
+        except:
+            print("[INFO   ] [Cobot RCS   ] [Response    ] Could not analyze order")
+
 
 
     def on_event(self, event):
@@ -74,9 +77,6 @@ class PinPointState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Moving arm...")
-        #armControl = arm_controller()
-        print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done")
-        # Arm Code Here #
 
     def on_event(self, event):
         if event == 'Point Complete':
@@ -84,6 +84,15 @@ class PinPointState(State):
         elif event == 'Error':
             return CancelOrderState()
         return self
+    
+    def run_state(self):
+        try:
+            # Arm Code Here #
+            #armControl = arm_controller()
+
+            print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done")
+        except:
+            print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Could not communicate with arm")
 
 
 class CancelOrderState(State):
@@ -96,3 +105,6 @@ class CancelOrderState(State):
             # Reset topping to default
             return ReceiveState
         return self
+
+    def run_state(self):
+        print('Running')

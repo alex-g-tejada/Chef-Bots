@@ -42,5 +42,8 @@ class CobotControl(object):
     def on_event(self, event):
         self.state = self.state.on_event(event)
 
+    def run_state(self):
+        self.state.run_state()
+
     def state_reset(self):
         self.state = ReceiveState()
