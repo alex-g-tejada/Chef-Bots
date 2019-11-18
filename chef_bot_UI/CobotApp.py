@@ -23,7 +23,7 @@ Window.size = (800, 500)
 __author__ = 'Alex Tejada'
 
 class CancelBtn(Button):
-    
+
     #enabled = BooleanProperty(False)
 
     def __init__(self, *args, **kwargs):
@@ -41,12 +41,12 @@ class CancelBtn(Button):
             self.color = [1,1,1,.5]
 
     def on_touch_down(self, touch):
-        
+
         if True == CancelBtn.disabled:
             #print('[INFO   ] [Cobot App   ] Cancel Button Push ', CancelBtn.disabled)
             self.on_press()
             return super(self.__class__, self).on_touch_down(touch)
-    
+
 """
 Screen to display individual set of ingredients
 """
@@ -63,7 +63,7 @@ class MultSelectScreen(Screen):
         super().__init__(*args, **kwargs)
 
 """
-Landing page for the application that will greet the user 
+Landing page for the application that will greet the user
 """
 class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
@@ -94,11 +94,11 @@ class MainApp(App):
     chef_bot_secondary = 'DAE8D3'
     chef_bot_tertiary = 'F7F3E3'
 
-    # Cobot State controller 
+    # Cobot State controller
     cobotController = CobotControl()
     # String holding the state of the controller
     Status = StringProperty(str(cobotController.state))
-    
+
     # State Keys
     RC = 'Request Confirmed'
     SC = 'Setup Complete'
@@ -115,11 +115,14 @@ class MainApp(App):
     cheese = 'Cheese'
     onions = 'Onions'
 
+    # Messages
+    message_processing = "Order still processing"
+    message_complete = "Order completed!"
+
     # List of Ingredients selected
     toppingList = []
 
     request = 'empty'
-
 
     def MainApp (self):
         pass
@@ -132,14 +135,14 @@ class MainApp(App):
         self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
         self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
         self.popupWindow = object()
-        
+
     def build(self):
         self.title = 'Chef Bots'
         self.__init__()
         return self.screenmanager
-    
+
     def toppinglist_toString(self):
-        s = str(self.toppingList) 
+        s = str(self.toppingList)
         s = s.replace("'","")
         s = s.replace("[","")
         s = s.replace("]","")
@@ -152,36 +155,43 @@ class MainApp(App):
         self.cobotController.on_event(self.SC)
         # Entering PinPoint State
         self.cobotController.on_event(self.FR)
-        # Completing Order
-        self.cobotController.on_event(self.PC)
+        # Completed Order
+        self.requestMessage(self.message_complete)
+        #self.cobotController.on_event(self.PC)
 
     def getOrder(self, order):
+        self.toppingList = []
         if order == 'Deluxe':
             self.toppingList.extend([self.tomatoes, self.lettuce, self.pickles, self.cheese, self.onions])
         elif order == 'Plain':
             self.toppingList.extend([self.pickles, self.cheese])
-        else: 
+        else:
             self.toppingList.append(self.tomatoes)
-        pass
+
+    def requestMessage(self, message):
+        show = MenuPopup_Error()
+        self.popupWindow = Popup(title=message, title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
+                content=show, size_hint=(None, None), size=(280,200), background = 'images/Popup2.png')
+        self.popupWindow.open()
 
     def Pressbtn(self, instance):
         if self.cobotController.RS != str(self.cobotController.state):
             print("[INFO   ] [Cobot App   ] Not in the receive state.")
-            self.requestError()
+            self.requestMessage(self.message_processing)
         else:
             self.request = instance.text
             print('[INFO   ] [Cobot App   ] Requesting ', self.request)
             self.getOrder(self.request)
             show = MenuPopup()
-            self.popupWindow = Popup(title="Requested " + self.request + ': ' + self.toppinglist_toString(), title_align='center', separator_color= [254/255.,255/255,254/255.,1.], 
+            self.popupWindow = Popup(title="Requested " + self.request + ': ' + self.toppinglist_toString(), title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
                     content=show, size_hint=(None, None), size=(350,250), background = 'images/Popup2.png')
             self.popupWindow.open()
-    
+
     def itemSelect(self, text, state):
         is_box_on = state
         print('[INFO   ] [Cobot App   ] Checkbox State: ', is_box_on)
         print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
-        
+
         if is_box_on == 'down':
             item = text
             self.toppingList.append(item)
@@ -190,17 +200,11 @@ class MainApp(App):
             item = text
             self.toppingList.remove(item)
             print('[INFO   ] [Cobot App   ] Checkbox Selected: ', self.toppingList)
-    
-    def requestError(self):
-        show = MenuPopup_Error()
-        self.popupWindow = Popup(title="A previous order is still processing ", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
-                content=show, size_hint=(None, None), size=(280,200), background = 'images/Popup2.png')
-        self.popupWindow.open()
 
     def Submitbtn(self, instance):
         if self.cobotController.RS != str(self.cobotController.state):
             print("[INFO   ] [Cobot App   ] Not in the receive state.")
-            self.requestError()
+            self.requestMessage(self.message_processing)
 
         elif len(self.toppingList) > 0:
             print('[INFO   ] [Cobot App   ] Requesting ', self.toppingList)
@@ -214,7 +218,7 @@ class MainApp(App):
             self.popupWindow = Popup(title="No selection was made", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
                     content=show, size_hint=(None, None), size=(280,200), background = 'images/Popup2.png')
             self.popupWindow.open()
-            
+
     def ConfirmMultSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Confirmed. ')
         self.popupWindow.dismiss()
@@ -237,7 +241,7 @@ class MainApp(App):
     def DeclineSel_Mult(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.toppinglist_toString() + ' Cancelled. ')
         self.popupWindow.dismiss()
-    
+
     def Dismiss(self, instance):
         self.popupWindow.dismiss()
 
@@ -252,23 +256,23 @@ class MainApp(App):
             self.popupWindow = Popup(title="No requests are running", title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
                     content=show, size_hint=(None, None), size=(280,200), background = 'images/Popup2.png')
             self.popupWindow.open()
-    
+
     def stopOrder(self, instance):
         print('[INFO   ] [Cobot RCS   ] Returning to ReceiveState...')
         self.popupWindow.dismiss()
         self.cobotController.on_event(self.ER)
         self.cobotController.state_reset()
-        self.toppingList = []
+        #self.toppingList = []
         print('[INFO   ] [Cobot RCS   ] Done')
-        
+
     def AppExit(self, isinstance):
-        pass
+        print("[INFO   ] [Cobot App   ] Exiting applicaiton")
 
 # End of app delcaration
 
-if __name__ == "__main__":  
+if __name__ == "__main__":
     Config.set('graphics', 'fullscrenn','auto')
     Config.set('graphics','window_state','maximized')
     Config.write()
     app = MainApp()
-    app.run() 
+    app.run()

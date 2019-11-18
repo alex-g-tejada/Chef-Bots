@@ -40,7 +40,7 @@
             size: self.size
             pos: self.pos
             radius: self.border_radius
-        
+
 # NavBar Buttons
 <HeaderButton@Button>:
     markup: True
@@ -59,10 +59,13 @@
             pos: self.pos
             radius: self.border_radius
 
+# Footer Button
 <CancelBtn@Button>:
     #enabled: False
+    text: 'Cancel Order'
+    on_press: app.Cancel(self)
     size_hint: None, None
-    pos_hint: {'x': 0.2, "top": 0.5}    
+    pos_hint: {'x': 0.2, "top": 0.5}
     markup: True
     background_color: (0,0,0,0)
     background_normal: ''
@@ -99,7 +102,41 @@
             pos: self.pos
             radius: self.border_radius
 
-    
+
+
+####### Menu Item card #######
+# Needs formating
+<MenuItem@StackLayout>:
+    orientation: 'tb-lr'
+    spacing: 10
+    size: 500, 500
+    back_color: rgba(app.chef_bot_black)
+    border_radius: [18]
+    border_radius: [18]
+    color: rgba(app.chef_bot_black)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_secondary)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
+    #Button:
+        #size_hint: 0.3, 1
+    #Button:
+        #size_hint: 0.3, 1
+    #Button:
+        #ize_hint: 0.3, 1
+
+    MenuCheckBox:
+        size_hint: 0.3, 1
+    MenuImg:
+        size_hint: 0.3, 1
+        source: 'images/burger.png'
+    MenuLabel:
+        size_hint: 0.3, 1
+        text: "Practice Cheese"
+
 # Checkbox - Multi-select
 <MenuCheckBox@CheckBox>:
     size: (80,30)
@@ -107,8 +144,24 @@
     background_checkbox_down:'images/Checked-checkbox.png'
     pos_hint_x: 0
 
+# Messager
+<MenuLabelBubble@Label>:
+    color: 0,0,0,1
+    size_hint_x: None
+    width: 100
+    font_name: 'fonts/Roboto-Regular.ttf'
+    border_radius: [18]
+    color: rgba(app.chef_bot_light)
+    canvas.before:
+        Color:
+            rgba: rgba(app.chef_bot_black)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: self.border_radius
 
-# 
+
+# Image Buttons
 <BtnStack@StackLayout>:
     pos: self.parent.pos
     size: self.parent.size
@@ -132,7 +185,7 @@
 # Confirmation Popup
 <MenuPopup>:
     title_color: rgba(app.chef_bot_black)
-    
+
     PopupBtn:
         text: 'Yes'
         size_hint: 0.6, 0.2
@@ -148,7 +201,7 @@
 # Confirmation Pop for Mult Select
 <MenuPopup_Mult>:
     title_color: rgba(app.chef_bot_black)
-    
+
     PopupBtn:
         text: 'Yes'
         size_hint: 0.6, 0.2
@@ -176,7 +229,7 @@
         size_hint: 0.6, 0.2
         pos_hint: {'x': 0.2, 'y': 0.3}
         on_press: app.Dismiss(self)
-
+# Error Handling Button
 <MenuPopup_Error>:
     id: PopupCan
     title_color: rgba(app.chef_bot_black)
@@ -192,17 +245,6 @@
     cols: 2
     size_hint: 1, None
     height: 60
-    canvas:
-        Color:
-            rgb: rgba(app.chef_bot_black)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
-<NavBar_two>:
-    cols: 2
-    size_hint: 1, 0.13
-    pos_hint: {'x': 1, 'top': 1}
     canvas:
         Color:
             rgb: rgba(app.chef_bot_black)
@@ -228,8 +270,7 @@
         #pos_hint_x: 0.15
         #bold: True
 
-
-# Panels #
+######################### Panels #####################################
 # Panel to Make single selection
 <OneSelectionPanel@GridLayout>:
     cols: 1
@@ -243,10 +284,18 @@
             pos: self.pos
             size: self.size
 
-# Greeter Panel 
+# Panel for cancelation Button:
+<FooterPanel@GridLayout>:
+    rows: 1
+    spacing: 10, 10
+    padding: 10, 10
+    size_hint: 1, 1
+
+
+# Greeter Panel
 <GreeterPanel@GridLayout>:
     cols: 3
-    padding: 100
+    padding: 80
     spacing: 30
     pos_hint: {'x': 0.5, 'y': 0.5}
     canvas:
@@ -256,7 +305,7 @@
             pos: self.pos
             size: self.size
 
-# Greeter Panel 
+# Greeter Panel
 <MultiPanel@GridLayout>:
     cols: 3
     padding: 100
@@ -272,13 +321,13 @@
 
 # Screen 1
 <GreeterScreen>:
-    
+
     GridLayout:
         cols: 1
         rows: 4
         NavBar:
             Label:
-                text: 'Chef Bots'
+                text: ''
                 font_name: 'fonts/Roboto-Regular.ttf'
                 color: rgba('FDFFFC')
                 pos_hint_x: 0.1
@@ -293,23 +342,23 @@
                     rgb: rgba('FDFFFC')
                 Rectangle:
                     pos: self.pos
-                    size: self.size  
+                    size: self.size
             MenuLabel:
                 text: "Welcome to the collaborative robot!"
                 font_size: 20
                 size_hint: (1, None)
                 height: 20
-            
+
             MenuLabel:
                 text: "Click an option to start"
                 size_hint: (1, None)
                 height: 15
-                
+
 
         GreeterPanel:
             MenuButton2:
                 id: T
-                on_press: 
+                on_press:
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "screen_two"
@@ -318,11 +367,11 @@
                         source: 'images/burger.png'
                     MenuLabel:
                         text: 'Individual Items'
-                
+
             MenuButton2:
                 id: L
                 bold: True
-                on_press: 
+                on_press:
                     root.manager.transition.direction = "left"
                     root.manager.transition.duration = 1
                     root.manager.current = "screen_three"
@@ -331,7 +380,7 @@
                         source: 'images/checklist.png'
                     MenuLabel:
                         text: 'Custom Selection'
-                
+
             MenuButton2:
                 id: L
                 on_press: app.get_running_app().stop()
@@ -340,11 +389,11 @@
                         source: 'images/exit.png'
                     MenuLabel:
                         text: 'Exit'
-            
+
         FooterBar:
 
 #
-# Screen 2 
+# Screen 2
 <OneSelectScreen>:
     id: Screen_one
     GridLayout:
@@ -363,29 +412,29 @@
                 size_hint: 1, 1
                 HeaderButton:
                     text: 'Home'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_one"
-                
+
                 HeaderButton:
                     text: 'Single'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_two"
 
                 HeaderButton:
                     text: 'Mult'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_three"
 
                 HeaderButton:
                     text: 'Exit'
-                    on_press: app.get_running_app().stop()  
-        
+                    on_press: app.get_running_app().stop()
+
         # Main
         OneSelectionPanel:
             MenuLabel:
@@ -419,15 +468,8 @@
                     text: '--'
                     on_press: app.Pressbtn(self)
         FooterBar:
-            GridLayout:
-                rows: 1
-                spacing: 10, 10
-                padding: 10, 10
-                size_hint: 1, 1
+            FooterPanel:
                 CancelBtn:
-                    id: cbtn
-                    text: 'Cancel Order'
-                    on_press: app.Cancel(self)
 
 # Screen 3s
 <MultSelectScreen>:
@@ -436,7 +478,7 @@
         rows: 5
         NavBar:
             Label:
-                text: 'Multi-Selection'
+                text: 'Custom Selection'
                 color: rgba('FDFFFC')
                 pos_hint_x: 0.1
                 bold: True
@@ -448,30 +490,30 @@
                 size_hint: 1, 1
                 HeaderButton:
                     text: 'Home'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "right"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_one"
-                
+
                 HeaderButton:
                     text: 'Single'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_two"
 
                 HeaderButton:
                     text: 'Mult'
-                    on_press: 
+                    on_press:
                         root.manager.transition.direction = "left"
                         root.manager.transition.duration = 1
                         root.manager.current = "screen_three"
 
                 HeaderButton:
                     text: 'Exit'
-                    on_press: app.get_running_app().stop()  
+                    on_press: app.get_running_app().stop()
 
-        
+
         #
         #
         BoxLayout:
@@ -483,14 +525,14 @@
                     rgb: rgba(app.chef_bot_light)
                 Rectangle:
                     pos: self.pos
-                    size: self.size  
+                    size: self.size
             MenuLabel:
                 text: "Select the ingredients to apply"
                 size_hint: 0.5, 0.5
                 font_size: 15
-                pos_hint: {'right': 0.75, 'top':0} 
+                pos_hint: {'right': 0.75, 'top':0}
                 #color: 0,0,0,1
-            
+
 
         GridLayout:
             cols: 6
@@ -502,7 +544,7 @@
                     rgb: rgba(app.chef_bot_light)
                 Rectangle:
                     pos: self.pos
-                    size: self.size  
+                    size: self.size
 
             MenuLabel:
                 text: app.tomatoes
@@ -537,36 +579,27 @@
             MenuCheckBox:
                 text: app.onions
                 on_state: app.itemSelect(self.text, self.state)
-        
+
         # B
         BoxLayout:
             orientation: 'vertical'
             padding: 20
+            spacing: 20
             size_hint: 1, 0.2
             canvas:
                 Color:
                     rgb: rgba(app.chef_bot_light)
                 Rectangle:
                     pos: self.pos
-                    size: self.size  
+                    size: self.size
             MenuButton2:
                 text: "Submit"
                 size_hint_x: 0.2, 0.2
-                pos_hint: {'y': 0, 'right': 0.6} 
+                pos_hint: {'y': 0, 'right': 0.65}
                 on_press: app.Submitbtn(self)
 
 
-            
+
         FooterBar:
-            GridLayout:
-                rows: 1
-                spacing: 10, 10
-                padding: 10, 10
-                size_hint: 1, 1
+            FooterPanel:
                 CancelBtn:
-                    id: cbtn
-                    text: 'Cancel Order'
-                    on_press: app.Cancel(self)
-            
-                
-                

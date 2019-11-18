@@ -141,3 +141,29 @@ class arm_controller:
         self.move_home()
 
 
+<<<<<<< HEAD
+=======
+    
+    def on_event(self, event):
+        if event == 'Point Complete':
+            return ReceiveState()
+        elif event == 'Error':
+            return CancelOrderState()
+        return self
+
+
+class CancelOrderState(State):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        print("code start up!!")
+
+    def on_event(self, event):
+        if event == 'Request Completed':
+            # Reset topping to default
+            self.orderTopping = 'None'
+            return ReceiveState
+        return self 
+
+if __name__ == "__main__":  
+    app = arm_controller()
+>>>>>>> 2880aa3084829db485918f49e990d81c735f7bcd
