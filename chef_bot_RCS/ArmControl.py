@@ -148,3 +148,7 @@ if __name__ == "__main__":
     # You can call the other function with practiceObjecy.[Name of function]
     # For example:
     # practiceObject.move_untildone( inputarr)
+
+    # Note:
+    # pip install pyserial is needs to be installed
+    
