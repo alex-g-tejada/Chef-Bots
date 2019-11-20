@@ -109,7 +109,7 @@
 <MenuItem@StackLayout>:
     orientation: 'tb-lr'
     spacing: 10
-    size: 500, 500
+    size: 200, 200
     back_color: rgba(app.chef_bot_black)
     border_radius: [18]
     border_radius: [18]
@@ -121,21 +121,6 @@
             size: self.size
             pos: self.pos
             radius: self.border_radius
-    #Button:
-        #size_hint: 0.3, 1
-    #Button:
-        #size_hint: 0.3, 1
-    #Button:
-        #ize_hint: 0.3, 1
-
-    MenuCheckBox:
-        size_hint: 0.3, 1
-    MenuImg:
-        size_hint: 0.3, 1
-        source: 'images/burger.png'
-    MenuLabel:
-        size_hint: 0.3, 1
-        text: "Practice Cheese"
 
 # Checkbox - Multi-select
 <MenuCheckBox@CheckBox>:
@@ -143,6 +128,11 @@
     background_checkbox_normal:'images/Unchecked-checkbox.png'
     background_checkbox_down:'images/Checked-checkbox.png'
     pos_hint_x: 0
+
+<MenuCheckBoxItem@CheckBox>:
+    background_checkbox_normal:'images/Unchecked-checkbox.png'
+    background_checkbox_down:'images/Checked-checkbox.png'
+
 
 # Messager
 <MenuLabelBubble@Label>:
@@ -603,3 +593,49 @@
         FooterBar:
             FooterPanel:
                 CancelBtn:
+
+<GreeterScreen2>:
+
+    GridLayout:
+        cols: 1
+        rows: 4
+        NavBar:
+            Label:
+                text: ''
+                font_name: 'fonts/Roboto-Regular.ttf'
+                color: rgba('FDFFFC')
+                pos_hint_x: 0.1
+                bold: True
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, 0.2
+            spacing: 20
+            canvas:
+                Color:
+                    rgb: rgba('FDFFFC')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            MenuLabel:
+                text: "Testing Space"
+                font_size: 20
+                size_hint: (1, None)
+                height: 20
+
+
+
+        GridLayout:
+            cols: 3
+            spacing: 10
+            size_hint: 1, 0.5
+            MenuItem:
+            MenuItem:
+            MenuItem:
+            MenuItem:
+            MenuItem:
+            Label:
+                text: ''
+
+
+        FooterBar:

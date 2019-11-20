@@ -55,29 +55,13 @@ class GreeterScreen(Screen):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+class GreeterScreen2(Screen):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
 class NavBar_two(GridLayout):
     def __init__(self, *args, **kwargs):
         super(NavBar_two, self).__init__(*args, **kwargs)
-
-
-class TestS(BoxLayout):
-    def __init__(self, *args, **kwargs):
-        super(TestS, self).__init__(*args, **kwargs)
-        self.orientation="horizontal"
-
-
-class TestScreen(Screen):
-    def __init__(self, *args, **kwargs):
-        super(TestScreen, self).__init__(*args, **kwargs)
-        self.count_box = 1
-        g = GridLayout()
-        g.cols = 1
-        g.rows = 4
-        g.add_widget(NavBar_two())
-        g.add_widget(Button())
-        g.add_widget(Button())
-        g.add_widget(Button())
-        self.add_widget(g)
 
 
 """
@@ -140,8 +124,8 @@ class MainApp(App):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.screenmanager = ScreenManager()
-        self.screenmanager.add_widget(TestScreen(name="test"))
-        #self.screenmanager.add_widget(GreeterScreen(name="screen_one"))
+        #self.screenmanager.add_widget(TestScreen(name="test"))
+        self.screenmanager.add_widget(GreeterScreen2(name="screen_one"))
         #self.screenmanager.add_widget(OneSelectScreen(name="screen_two"))
         #self.screenmanager.add_widget(MultSelectScreen(name="screen_three"))
         
@@ -149,6 +133,7 @@ class MainApp(App):
     def build(self):
         self.title = 'Chef Bots'
         self.__init__()
+
         return self.screenmanager
     
     def toppinglist_toString(self):
