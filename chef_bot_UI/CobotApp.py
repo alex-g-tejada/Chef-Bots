@@ -154,7 +154,8 @@ class MainApp(App):
         self.cobotController.run_state(self.toppingList)
         # Entering Response State
         self.cobotController.on_event(self.SC)
-        self.cobotController.run_state(self.toppingList)
+        results = self.cobotController.run_state(self.toppingList)
+        print("[INFO   ] [Cobot App   ] AI results: ", results)
         # Entering PinPoint State
         self.cobotController.on_event(self.FR)
         self.cobotController.run_state(self.toppingList)
