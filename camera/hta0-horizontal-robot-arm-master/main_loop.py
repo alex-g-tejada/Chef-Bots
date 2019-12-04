@@ -34,7 +34,7 @@ class main_loop:
         multiplier = 10 ** decimals
         return int(n * multiplier) / multiplier
 
-    def capturefromPiCamera(self, imgdir,prefix="Cap",fullscreen=False,detectXYZ=True, calcXYZ=True, arm=True):
+    def capturefromPiCamera(self, imgdir,prefix="Cap",fullscreen=True,detectXYZ=True, calcXYZ=True, arm=True):
 
             #initiate counters
             img_counter=0
