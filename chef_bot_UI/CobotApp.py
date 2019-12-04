@@ -9,12 +9,11 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import StringProperty, BooleanProperty
 
-# State Machine for the Cobot
+# State Machine for the Cobot #
 import sys
 sys.path.append('../chef_bot_RCS/')
 from cobot_state import CobotControl
-#from chef_bot_RCS.cobot_state import CobotControl
-# Adjust Window Size for the PI
+# Adjust Window Size for the PI #
 from kivy.core.window import Window
 from kivy.config import Config
 Builder.load_file('mainapp.kv')
@@ -278,10 +277,16 @@ class MainApp(App):
         self.popupWindow = Popup(title=self.message_exit, title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
                 content=show, size_hint=(None, None), size=(300,200), background = 'images/Popup2.png')
         self.popupWindow.open()
-        print("[INFO   ] [Cobot App   ] Exiting applicaiton....")
+        print("[INFO   ] [Cobot App   ] Exiting applicaiton...")
 
 
-# End of app delcaration
+'''
+    Running The Application
+For prototyping purposes, this main acts as the main application to run the Cobot.
+Eventually this portion can be implemented elsewhere and extracted to a program
+package for on the Cobot computer.
+
+'''
 
 if __name__ == "__main__":
     Config.set('graphics', 'fullscrenn','auto')
