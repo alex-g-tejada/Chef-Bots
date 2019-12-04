@@ -122,6 +122,12 @@ class MainApp(App):
     message_complete = "Order completed!"
     message_exit = "Would you like to exit the application?"
 
+    # NavBar Titles
+    home = 'Home'
+    single = 'Items'
+    mult = 'Custom'
+    leave = 'Exit'
+
     # List of Ingredients selected
     toppingList = []
 
@@ -164,6 +170,7 @@ class MainApp(App):
         results = self.cobotController.run_state(self.toppingList)
         print("[INFO   ] [Cobot App   ] Pinpoint Results: ", results)
         # Completed Order
+        self.cobotController.state_reset()
         self.requestMessage(self.message_complete)
 
     def getOrder(self, order):
@@ -231,15 +238,12 @@ class MainApp(App):
         self.popupWindow.dismiss()
         self.Cbtn.on_enabled(True)
         self.startOperation()
-        #self.Status = str(self.cobotController.state)
-        #self.cobotController.run_state("RC")
+
 
     def ConfirmSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Confirmed. ')
         self.popupWindow.dismiss()
         self.startOperation()
-        #self.Status = str(self.cobotController.state)
-        #self.cobotController.run_state('start')
 
     def DeclineSel(self, instance):
         print('[INFO   ] [Cobot App   ] Requested ' + self.request + ' Cancelled. ')

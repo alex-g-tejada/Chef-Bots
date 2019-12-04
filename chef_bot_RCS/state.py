@@ -5,8 +5,6 @@ This state object will provide utility functions for the individual
 states within the cobot state machine
 """
 class State(object):
-    # Topping Requesteed
-    orderTopping = "None"
     
     """
     state constructor that will activate when a new state has been 
@@ -14,6 +12,7 @@ class State(object):
     """
     def __init__ (self):
         print('[INFO   ] [Cobot RCS   ] Current State: ', str(self))
+
     
     """
     Provides the current state name that will notify the user the phase 
