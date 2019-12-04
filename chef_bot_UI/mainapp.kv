@@ -229,6 +229,21 @@
         pos_hint: {'x': 0.2, 'y': 0.5}
         on_press: app.Dismiss(self)
 
+# Cancel Message
+<MenuPopup_Exit>:
+    id: PopupCan
+    title_color: rgba(app.chef_bot_black)
+    PopupBtn:
+        text: 'Yes'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.6}
+        on_press: app.get_running_app().stop()
+
+    PopupBtn:
+        text: 'No'
+        size_hint: 0.6, 0.2
+        pos_hint: {'x': 0.2, 'y': 0.3}
+        on_press: app.Dismiss(self)
 
 # Top NavBar
 <NavBar@GridLayout>:
@@ -373,7 +388,7 @@
 
             MenuButton2:
                 id: L
-                on_press: app.get_running_app().stop()
+                on_press: app.AppExit()
                 BtnStack:
                     MenuImg:
                         source: 'images/exit.png'
@@ -423,7 +438,7 @@
 
                 HeaderButton:
                     text: 'Exit'
-                    on_press: app.get_running_app().stop()
+                    on_press: app.AppExit()
 
         # Main
         OneSelectionPanel:
@@ -501,7 +516,7 @@
 
                 HeaderButton:
                     text: 'Exit'
-                    on_press: app.get_running_app().stop()
+                    on_press: app.AppExit()
 
 
         #

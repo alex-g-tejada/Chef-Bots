@@ -84,6 +84,9 @@ class MenuPopup_Can(FloatLayout):
 class MenuPopup_Error(FloatLayout):
     pass
 
+class MenuPopup_Exit(FloatLayout):
+    pass
+
 class MainApp(App):
 
     # Main Menu Color Decorators
@@ -118,6 +121,7 @@ class MainApp(App):
     # Messages
     message_processing = "Order still processing"
     message_complete = "Order completed!"
+    message_exit = "Would you like to exit the application?"
 
     # List of Ingredients selected
     toppingList = []
@@ -155,10 +159,11 @@ class MainApp(App):
         # Entering Response State
         self.cobotController.on_event(self.SC)
         results = self.cobotController.run_state(self.toppingList)
-        print("[INFO   ] [Cobot App   ] AI results: ", results)
+        print("[INFO   ] [Cobot App   ] AI Results: ", results)
         # Entering PinPoint State
         self.cobotController.on_event(self.FR)
-        self.cobotController.run_state(self.toppingList)
+        results = self.cobotController.run_state(self.toppingList)
+        print("[INFO   ] [Cobot App   ] Pinpoint Results: ", results)
         # Completed Order
         self.requestMessage(self.message_complete)
 
@@ -268,8 +273,13 @@ class MainApp(App):
         #self.toppingList = []
         print('[INFO   ] [Cobot RCS   ] Done')
 
-    def AppExit(self, isinstance):
-        print("[INFO   ] [Cobot App   ] Exiting applicaiton")
+    def AppExit(self):
+        show = MenuPopup_Exit()
+        self.popupWindow = Popup(title=self.message_exit, title_align='center', separator_color= [254/255.,255/255,254/255.,1.],
+                content=show, size_hint=(None, None), size=(300,200), background = 'images/Popup2.png')
+        self.popupWindow.open()
+        print("[INFO   ] [Cobot App   ] Exiting applicaiton....")
+
 
 # End of app delcaration
 
