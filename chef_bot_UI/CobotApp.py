@@ -151,16 +151,15 @@ class MainApp(App):
     def startOperation(self):
         # Entering Detection State
         self.cobotController.on_event(self.RC)
-        self.cobotController.run_state()
+        self.cobotController.run_state(self.toppingList)
         # Entering Response State
         self.cobotController.on_event(self.SC)
-        self.cobotController.run_state()
+        self.cobotController.run_state(self.toppingList)
         # Entering PinPoint State
         self.cobotController.on_event(self.FR)
-        self.cobotController.run_state()
+        self.cobotController.run_state(self.toppingList)
         # Completed Order
         self.requestMessage(self.message_complete)
-        #self.cobotController.on_event(self.PC)
 
     def getOrder(self, order):
         self.toppingList = []
