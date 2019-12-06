@@ -116,7 +116,8 @@ if __name__ == "__main__":
     camObject = CameraModule()
 
     #loop.test_arm_clearcamera()
-    imgdir="/home/pi/Desktop/Captures/"
+    #imgdir="/home/pi/Desktop/Captures/"
+    imgdir="Images/"
     imgprefix="CapF"
     fullscreen=False
     #set detect XYZ to False when you want to use this loop to capture pictures (press spacebar)
