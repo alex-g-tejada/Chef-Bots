@@ -64,7 +64,7 @@ class CameraModule():
                 if bg_capture==False:
                         bg_counter+=1
                         #letting counter reach 52 provides warm up for camera, then capture background
-                        if bg_counter==52:
+                        if bg_counter==40:
                             self.cameraXYZ.load_background(image)
                             bg_capture=True
                             print("background captured")
