@@ -22,7 +22,8 @@ class camera_realtimeXYZ:
     def __init__(self):
 
         imgdir="Images/"
-        savedir="/camera_data/"
+        #savedir="camera_data/"
+        savedir=""
         self.imageRec=image_recognition_singlecam.image_recognition(False,False,imgdir,imgdir,False,True,False)
 
         #self.imageRec=image_recognition_singlecam.image_recognition(True,False,imgdir,imgdir,True,True)
