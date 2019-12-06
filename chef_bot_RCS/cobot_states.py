@@ -129,7 +129,7 @@ class PinPointState(State):
             # Arm Code Here #
             result = orderList
             inputarr = [30,12,6,0,0,0]
-            self.controller.move_untildone(inputarr)
+            self.controller.move_toXYZ(30,12,6)
 
             print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done") 
             return result
