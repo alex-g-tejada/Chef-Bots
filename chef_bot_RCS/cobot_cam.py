@@ -114,4 +114,15 @@ class CameraModule():
 if __name__ == "__main__":  
     # arm_controller() is a class, so we can assign a variable to it
     camObject = CameraModule()
-    camObject.capturefromPiCamera()
+
+    #loop.test_arm_clearcamera()
+    imgdir="/home/pi/Desktop/Captures/"
+    imgprefix="CapF"
+    fullscreen=False
+    #set detect XYZ to False when you want to use this loop to capture pictures (press spacebar)
+    detectXYZ=True
+    #set calculateXYZ to enable real world XYZ to be calculated
+    calculateXYZ=True
+    move_arm=False
+
+    camObject.capturefromPiCamera(imgdir,imgprefix,fullscreen,detectXYZ,calculateXYZ,move_arm)
