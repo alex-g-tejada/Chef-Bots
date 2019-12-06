@@ -80,7 +80,7 @@ class ResponseState(State):
             tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('models/onions.pb', 'output.pbtxt')
             for image in os.listdir(path):
                 print(image)
-                img = cv2.imread(str(image))
+                img = cv2.imread(path+image)
                 print(img)
                 rows, cols, channels = img.shape
                 tensorflowNet_onions.setInput(cv2.dnn.blobFromImage(img, size=(300, 300), swapRB=True, crop=False))
