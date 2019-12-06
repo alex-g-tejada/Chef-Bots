@@ -114,3 +114,4 @@ class CameraModule():
 if __name__ == "__main__":  
     # arm_controller() is a class, so we can assign a variable to it
     camObject = CameraModule()
+    camObject.capturefromPiCamera()
