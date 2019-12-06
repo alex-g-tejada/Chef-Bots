@@ -53,6 +53,7 @@ class DetectionState(State):
             return orderList
         except:
             print("[INFO   ] [Cobot RCS   ] [Dectection  ] Camera could not initalize")
+            error = "Could not setup detection"
 
     def on_event(self, event):
         if event == 'Setup Complete':
@@ -93,7 +94,7 @@ class PinPointState(State):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Moving arm...")
         # Communicate with Pi and Arduino
-        #self.controller = arm_controller()
+        self.controller = arm_controller()
 
     def on_event(self, event):
         if event == 'Point Complete':
@@ -106,6 +107,8 @@ class PinPointState(State):
         try:
             # Arm Code Here #
             result = orderList
+            inputarr = [30,12,6,0,0,0]
+            self.controller.move_untildone(inputarr)
 
             print("[INFO   ] [Cobot RCS   ] [PinPoint    ] Done") 
             return result
