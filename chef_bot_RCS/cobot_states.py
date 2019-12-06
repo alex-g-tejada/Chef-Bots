@@ -49,6 +49,7 @@ class DetectionState(State):
                                                self.calculateXYZ,
                                                self.move_arm)
             print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
+            self.camObject = []
             return orderList
         except:
             print("[INFO   ] [Cobot RCS   ] [Dectection  ] Camera could not initalize")
