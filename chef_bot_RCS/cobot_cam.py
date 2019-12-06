@@ -89,6 +89,10 @@ class CameraModule():
                                 if obj_detected>0 and obj_detected==obj_detected_prev:
                                         id_counter+=1
                                         cv2.putText(image,"Object Detected",(20,20),cv2.FONT_HERSHEY_SIMPLEX,0.5,(255,0,0),2)
+                                        img_name = imgdir + prefix + "_{}.jpg".format(img_counter)
+                                        cv2.imwrite(img_name, image)
+                                        print(prefix + "_{} written!".format(img_counter))
+                                        img_counter += 1
                         
                 if k%256 == 27:
                         # ESC pressed
@@ -100,6 +104,9 @@ class CameraModule():
                         cv2.imwrite(img_name, image)
                         print(prefix + "_{} written!".format(img_counter))
                         img_counter += 1
+                elif img_counter == 20:
+                    print("Exiting...")
+                    break
 
                 # show the frame
                 cv2.imshow(win_name, image)

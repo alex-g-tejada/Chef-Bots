@@ -30,7 +30,7 @@ class DetectionState(State):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Dectection  ] Initializing camera...")
         self.camObject = CameraModule()
-        self.imgdir="/home/pi/Desktop/Captures/"
+        self.imgdir="Images/"
         self.imgprefix="CapF"
         self.fullscreen=False
         self.detectXYZ=True
@@ -64,6 +64,7 @@ class ResponseState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Response    ] Analyzing request...")
+        self.imgdir="Images/"
 
     def run_state(self, orderList):
         try:
