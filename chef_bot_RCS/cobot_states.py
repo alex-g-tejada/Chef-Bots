@@ -73,11 +73,11 @@ class ResponseState(State):
         self.xyzcal = camera_realtimeXYZ()
 
     def run_state(self, orderList):
-        try:
+        #try:
             # AI Code Here #
             results = []
             path = "../chef_bot_RCS/Images/"
-            tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('../chef_bot_RSC/model.h5', 'output.pbtxt')
+            tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('../chef_bot_RSC/models/onions.h5', 'output.pbtxt')
             for image in os.listdir(path):
                 img = cv2.imread('image.jpg')
                 rows, cols, channels = img.shape
@@ -92,8 +92,8 @@ class ResponseState(State):
 
             print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
             return results
-        except:
-            print("[INFO   ] [Cobot RCS   ] [Response    ] Could not analyze order")
+        #except:
+            #print("[INFO   ] [Cobot RCS   ] [Response    ] Could not analyze order")
 
 
     def on_event(self, event):
