@@ -79,7 +79,6 @@ class ResponseState(State):
             path = "../chef_bot_RCS/Images/"
             tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('models/onions.pb', 'output.pbtxt')
             for image in os.listdir(path):
-                print(image)
                 img = cv2.imread(path+image)
                 print(img)
                 rows, cols, channels = img.shape
@@ -91,6 +90,7 @@ class ResponseState(State):
                     if score > 0.9:
                         pic, XYZ = self.xyzcal(image, True)
                         results.append(XYZ)
+                        print("detected")
 
             print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
             return results
