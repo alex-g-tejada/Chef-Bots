@@ -2,6 +2,7 @@ from state import State
 from threading import Thread
 from ArmControl import arm_controller
 from ult import Threadingclass
+from cobot_cam import CameraModule
 import time
 
 
@@ -28,13 +29,25 @@ class DetectionState(State):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Dectection  ] Initializing camera...")
+        self.camObject = CameraModule()
+        self.imgdir="/home/pi/Desktop/Captures/"
+        self.imgprefix="CapF"
+        self.fullscreen=False
+        self.detectXYZ=True
+        self.calculateXYZ=True
+        self.move_arm=False
 
 
     def run_state(self, orderList):
         try:
             # Camera setup code #
             print("[INFO   ] [Cobot RCS   ] [Dectection  ] List", orderList)
-
+            self.camObject.capturefromPiCamera(self.imgdir,
+                                               self.imgprefix,
+                                               self.fullscreen,
+                                               self.detectXYZ,
+                                               self.calculateXYZ,
+                                               self.move_arm)
             print("[INFO   ] [Cobot RCS   ] [Dectection  ] Done")
             return orderList
         except:

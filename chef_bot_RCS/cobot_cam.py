@@ -78,7 +78,7 @@ class CameraModule():
                                 cv2.putText(image,"Picking",(20,20),cv2.FONT_HERSHEY_SIMPLEX,0.5,(0,255,0),2)
                                 print("Trigger Arm")
                                 #arm flag ensures movement can happen
-                                self.pickanddrop(XYZ,arm)
+                                #self.pickanddrop(XYZ,arm)
                                 id_counter=0
                         #run detection when on
                         if detectXYZ==True:
