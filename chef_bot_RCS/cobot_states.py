@@ -7,6 +7,9 @@ from camera_realworldxyz import camera_realtimeXYZ
 import time
 import os
 import cv2
+import numpy as np
+import tensorflow as tf
+
 
 
 """
@@ -75,22 +78,23 @@ class ResponseState(State):
     def run_state(self, orderList):
         #try:
             # AI Code Here #
-            results = []
-            path = "../chef_bot_RCS/Images/"
-            tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('models/onions.pb')
-            for image in os.listdir(path):
-                img = cv2.imread(path+image)
-                print(img)
-                rows, cols, channels = img.shape
-                tensorflowNet_onions.setInput(cv2.dnn.blobFromImage(img, size=(300, 300), swapRB=True, crop=False))
-                # Runs a forward pass to compute the net output
-                networkOutput = tensorflowNet_onions.forward()
-                for detection in networkOutput[0,0]:
-                    score = float(detection[2])
-                    if score > 0.9:
-                        pic, XYZ = self.xyzcal(image, True)
-                        results.append(XYZ)
-                        print("detected")
+            
+            #results = []
+            #path = "../chef_bot_RCS/Images/"
+            #tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('models/onions.pb')
+            #for image in os.listdir(path):
+            #    img = cv2.imread(path+image)
+            #    print(img)
+            #    rows, cols, channels = img.shape
+            #    tensorflowNet_onions.setInput(cv2.dnn.blobFromImage(img, size=(300, 300), swapRB=True, crop=False))
+            #    # Runs a forward pass to compute the net output
+            #    networkOutput = tensorflowNet_onions.forward()
+            #    for detection in networkOutput[0,0]:
+            #        score = float(detection[2])
+            #        if score > 0.9:
+            #            pic, XYZ = self.xyzcal(image, True)
+            #            results.append(XYZ)
+            print("detected")
 
             print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
             return results
