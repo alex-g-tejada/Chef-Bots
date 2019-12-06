@@ -6,7 +6,7 @@ import camera_realworldxyz
 from picamera.array import PiRGBArray
 from picamera import PiCamera
 
-class CameraModule(object()):
+class CameraModule():
 
     def __init__(self):
 
