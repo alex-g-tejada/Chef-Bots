@@ -1,8 +1,6 @@
 import numpy as np
 import cv2
 import image_recognition_singlecam
-import os 
-
 
 class camera_realtimeXYZ:
 
@@ -24,9 +22,7 @@ class camera_realtimeXYZ:
     def __init__(self):
 
         imgdir="Images/"
-        #savedir="camera_data/"
-        cwd = os.getcwd()
-        savedir = str(cwd) + "camera_data"
+        savedir="../chef_bot_RCS/camera_data/"
         self.imageRec=image_recognition_singlecam.image_recognition(False,False,imgdir,imgdir,False,True,False)
 
         #self.imageRec=image_recognition_singlecam.image_recognition(True,False,imgdir,imgdir,True,True)
