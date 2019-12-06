@@ -78,6 +78,7 @@ class ResponseState(State):
             results = []
             path = "../chef_bot_RCS/Images/"
             tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('models/onions.pb', 'output.pbtxt')
+            print(path)
             for image in os.listdir(path):
                 img = cv2.imread('image.jpg')
                 rows, cols, channels = img.shape
