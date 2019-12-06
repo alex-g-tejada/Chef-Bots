@@ -3,7 +3,10 @@ from threading import Thread
 from ArmControl import arm_controller
 from ult import Threadingclass
 from cobot_cam import CameraModule
+from camera_realworldxyz import camera_realtimeXYZ
 import time
+import os
+import cv2
 
 
 """
@@ -67,17 +70,30 @@ class ResponseState(State):
         super().__init__(*args, **kwargs)
         print("[INFO   ] [Cobot RCS   ] [Response    ] Analyzing request...")
         self.imgdir="Images/"
+        self.xyzcal = camera_realtimeXYZ()
 
     def run_state(self, orderList):
         try:
             # AI Code Here #
-            result = []
+            results = []
+            path = "../chef_bot_RCS/Images/"
+            tensorflowNet_onions = cv2.dnn.readNetFromTensorflow('../chef_bot_RSC/model.h5', 'output.pbtxt')
+            for image in os.listdir(path):
+                img = cv2.imread('image.jpg')
+                rows, cols, channels = img.shape
+                tensorflowNet_onions.setInput(cv2.dnn.blobFromImage(img, size=(300, 300), swapRB=True, crop=False))
+                # Runs a forward pass to compute the net output
+                networkOutput = tensorflowNet_onions.forward()
+                for detection in networkOutput[0,0]:
+                    score = float(detection[2])
+                    if score > 0.9:
+                        pic, XYZ = self.xyzcal(image, True)
+                        results.append(XYZ)
 
             print("[INFO   ] [Cobot RCS   ] [Response    ] Done")
-            return result
+            return results
         except:
             print("[INFO   ] [Cobot RCS   ] [Response    ] Could not analyze order")
-
 
 
     def on_event(self, event):
@@ -129,3 +145,9 @@ class CancelOrderState(State):
 
     def run_state(self, orderList):
         print('Running')
+
+
+if __name__ == "__main__":  
+    Ai = ResponseState()
+    lists = ["T","o"]
+    results = Ai.run_state(lists)
